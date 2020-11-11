@@ -49,7 +49,7 @@ export function selectionSort(a: number[]) {
 
 <strong>abcd</strong>
 
-(~Q) **This is question 1**
+(Q) **This is question 1**
 
 - answer1
 - answer2
