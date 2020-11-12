@@ -54,3 +54,9 @@ export function selectionSort(a: number[]) {
 - answer1
 - answer2
 - answer3
+
+(Q) **This is question 2**
+
+- answer4
+- answer5
+- answer6
