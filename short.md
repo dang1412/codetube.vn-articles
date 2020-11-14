@@ -51,7 +51,14 @@ export function selectionSort(a: number[]) {
 
 (Q-1) **This is question 1**
 
-- answer1
+- 
+  ```js
+  var a = 1
+  let x = 2
+  for (i = 1; i < 10; i++) {
+    printf(i)
+  }
+  ```
 - answer2
 - answer3
 
