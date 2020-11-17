@@ -64,6 +64,12 @@ export function selectionSort(a: number[]) {
 
 (Q-2) **This is question 2**
 
-- answer4
+- 
+  ~~~[tree](itemShape=circle,itemSize=30,height=250)
+  1:(4)
+  2:(2)|3:(5)
+  4:(1)|5:(3)
+  ~~~
+
 - answer5
 - answer6
