@@ -1,6 +1,9 @@
 
 # Markdown Visualization
 
+![Drag Racing](//placekitten.com/1500/500 "title1")
+![Drag Racing](//placekitten.com/800/1200 "cat")
+
 This feature allows user creating flexible interactive visualization with ease.
 
 ~~~[slideshow](height=300)
