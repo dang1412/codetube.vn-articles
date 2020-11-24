@@ -4,9 +4,9 @@
 ![Drag Racing](//placekitten.com/1500/500 "title1")
 ![Drag Racing](//placekitten.com/800/1200 "cat")
 
-![](https://www.youtube.com/watch?v=6GvPSR5u-j8 "cat")
+![](https://www.youtube.com/watch?v=0y42qvRU454 "cat")
 
-This feature allows user creating flexible interactive visualization with ease.
+This feature allows user creating flexible interactive visualization with easea.
 
 ~~~[slideshow](height=300)
 ~~~
