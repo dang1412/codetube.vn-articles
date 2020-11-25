@@ -1,19 +1,34 @@
 
-# Markdown Visualization
+# Blockly Demo
 
-This feature allows user creating flexible interactive visualization with ease.
+## Blockly with cat game
 
-## Btree
+User bring on Blockly IDE executed on a cat game with options
+- Choose toolbox's control blocks
+- Setup map for game
+  - 1: cat start position
+  - 2: obstacle
+  - 3: target
+  
+Leaner use provided control blocks to program for cat to go from start to the target without hitting obstacles.
 
-~~~[tree](itemSize=30,height=200)
-1:(3)
-2:(1,2)|3:(4,5,6,8)
+~~~[blocklycat](height=510px)
+[toolbox]
+controls_if
+controls_repeat_ext
+number:123
+cat_moveRight
+cat_moveDown
+cat_moveLeft
+cat_moveUp
+cat_moveTo:100,100
 
-1:(3)
-2:(1,2)|3:(4,5,6,7,8)
-
-1:(3,6)
-2:(1,2)|3:(4,5)|4:(7,8)
+[map]
+00000000
+01000000
+02200200
+00000300
+00000000
 ~~~
 
-Short content
+*Idea: add a character controlled by human, interact with the cat for it to react (yelling when touched...)*
