@@ -12,7 +12,7 @@ User bring on Blockly IDE executed on a cat game with options
   - 2: obstacle
   - 3: target
   
-Leaner use provided control blocks to program for cat to go from start to the target without hitting obstacles.
+Learner use provided control blocks to program for cat to go from start to the target without hitting obstacles.
 
 ~~~[blocklycat](height=510px)
 [toolbox]
@@ -35,6 +35,10 @@ cat_moveTo:100,100
 
 *Idea: add a character controlled by human, interact with the cat for it to react (yelling when touched...)*
 
-## Botzees robot demo
+## Botzees Robot
 
 ![](https://www.youtube.com/watch?v=0y42qvRU454)
+
+Learn programming and play with Botzees
+
+![](https://blog.bestbuy.ca/wp-content/uploads/2019/09/Botzees-Coding-AR-Robotics-Kit-4.jpg)
