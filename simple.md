@@ -1,6 +1,8 @@
 
 # Blockly Demo
 
+![](https://www.christmastoysguide.com/wp-content/uploads/2019/05/Pai-Technology-Botzees.jpg)
+
 ## Blockly with cat game
 
 User bring on Blockly IDE executed on a cat game with options
@@ -32,3 +34,7 @@ cat_moveTo:100,100
 ~~~
 
 *Idea: add a character controlled by human, interact with the cat for it to react (yelling when touched...)*
+
+## Botzees robot demo
+
+![](https://www.youtube.com/watch?v=0y42qvRU454)
