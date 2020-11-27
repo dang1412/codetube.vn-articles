@@ -47,4 +47,5 @@ Learn programming and play with Botzees
 
 (Q-1) **What is Botzees robot**
 
+- Botzees is a coding robotics kit for kids **ages 4 and up**, that combines **creativity, construction, and coding**.
 
