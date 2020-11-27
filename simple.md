@@ -49,3 +49,4 @@ Learn programming and play with Botzees
 
 - Botzees is a coding robotics kit for kids **ages 4 and up**, that combines **creativity, construction, and coding**.
 
+- Kids can program and code **6 different pre-designed Botzees** or create their own! Botzees can be taught to **move, drum, dance, make sounds, and light up** using the free app.
