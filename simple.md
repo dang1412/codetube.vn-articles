@@ -42,3 +42,9 @@ cat_moveTo:100,100
 Learn programming and play with Botzees
 
 ![](https://blog.bestbuy.ca/wp-content/uploads/2019/09/Botzees-Coding-AR-Robotics-Kit-4.jpg)
+
+
+
+(Q-1) **What is Botzees robot**
+
+
