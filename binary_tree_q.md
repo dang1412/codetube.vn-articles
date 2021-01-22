@@ -110,30 +110,30 @@ Postorder: 2, 4, 3, 7, 9, 8, 5.
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(5)
-  2:(1)|3:(8)
-  4:(2)|5:(4)|6:(7)|7:(9)
+  (5)
+  (1)|(8)
+  (2)|(4)|(7)|(9)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(5)
-  2:(3)|3:(8)
-  4:(2)|5:(4)|6:(7)|7:(9)
+  (5)
+  (3)|(8)
+  (2)|(4)|(7)|(9)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(5)
-  2:(3)|3:(9)
-  4:(2)|5:(4)|6:(7)|7:(8)
+  (5)
+  (3)|(9)
+  (2)|(4)|(7)|(8)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(5)
-  2:(3)|3:(7)
-  4:(2)|5:(4)|6:(8)|7:(9)
+  (5)
+  (3)|(7)
+  (2)|(4)|(8)|(9)
   ~~~
   
 ---
@@ -146,30 +146,30 @@ Level Order Traversal: 1, 4, 5, 9, 8, 2, 3
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(1)
-  2:(4)|3:(5)
-  4:(9)|5:(8)|6:(2)|7:(3)
+  (1)
+  (4)|(5)
+  (9)|(8)|(2)|(3)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(1)
-  2:(5)|3:(4)
-  4:(9)|5:(8)|6:(2)|7:(3)
+  (1)
+  (5)|(4)
+  (9)|(8)|(2)|(3)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(1)
-  2:(4)|3:(5)
-  4:(8)|5:(9)|6:(2)|7:(3)
+  (1)
+  (4)|(5)
+  (8)|(9)|(2)|(3)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
-  1:(1)
-  2:(4)|3:(5)
-  4:(8)|5:(9)|6:(3)|7:(2)
+  (1)
+  (4)|(5)
+  (8)|(9)|(3)|(2)
   ~~~
   
 Source [www.sanfoundry.com/...](https://www.sanfoundry.com/data-structure-questions-answers-binary-tree-properties/)
