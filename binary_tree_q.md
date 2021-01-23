@@ -104,6 +104,40 @@ Explanation: The relation between number of nodes(N) and leaves(L) is N=2*L-1.
 
 ---
 
+(Q-11-4) *Construct a binary tree by using postorder and inorder sequences given below.*
+Inorder: N, M, P, O, Q
+Postorder: N, P, Q, O, M
+
+- 
+  ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
+  (O)
+  (M)|(N)
+  ()|()|(Q)|(P)
+  ~~~
+  
+- 
+  ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
+  (N)
+  (M)|(O)
+  ()|()|(Q)|(P)
+  ~~~
+  
+- 
+  ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
+  (M)
+  (N)|(O)
+  ()|()|(Q)|(P)
+  ~~~
+  
+- 
+  ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
+  (M)
+  (N)|(O)
+  ()|()|(P)|(Q)
+  ~~~
+
+---
+
 (Q-12-2) *Construct a binary search tree by using postorder sequence given below.*
 
 Postorder: 2, 4, 3, 7, 9, 8, 5.
