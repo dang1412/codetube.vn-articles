@@ -105,7 +105,9 @@ Explanation: The relation between number of nodes(N) and leaves(L) is N=2*L-1.
 ---
 
 (Q-11-4) *Construct a binary tree by using postorder and inorder sequences given below.*
+
 Inorder: N, M, P, O, Q
+
 Postorder: N, P, Q, O, M
 
 - 
