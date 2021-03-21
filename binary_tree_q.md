@@ -113,29 +113,29 @@ Postorder: N, P, Q, O, M
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (O)
-  (M)|(N)
-  ()|()|(Q)|(P)
+  (M)(N)
+  ()()(Q)(P)
   ~~~
   
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (N)
-  (M)|(O)
-  ()|()|(Q)|(P)
+  (M)(O)
+  ()()(Q)(P)
   ~~~
   
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (M)
-  (N)|(O)
-  ()|()|(Q)|(P)
+  (N)(O)
+  ()()(Q)(P)
   ~~~
   
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (M)
-  (N)|(O)
-  ()|()|(P)|(Q)
+  (N)(O)
+  ()()(P)(Q)
   ~~~
 
 ---
@@ -147,29 +147,29 @@ Postorder: 2, 4, 3, 7, 9, 8, 5.
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (5)
-  (1)|(8)
-  (2)|(4)|(7)|(9)
+  (1)(8)
+  (2)(4)(7)(9)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (5)
-  (3)|(8)
-  (2)|(4)|(7)|(9)
+  (3)(8)
+  (2)(4)(7)(9)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (5)
-  (3)|(9)
-  (2)|(4)|(7)|(8)
+  (3)(9)
+  (2)(4)(7)(8)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (5)
-  (3)|(7)
-  (2)|(4)|(8)|(9)
+  (3)(7)
+  (2)(4)(8)(9)
   ~~~
   
 ---
@@ -183,29 +183,29 @@ Level Order Traversal: 1, 4, 5, 9, 8, 2, 3
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (1)
-  (4)|(5)
-  (9)|(8)|(2)|(3)
+  (4)(5)
+  (9)(8)(2)(3)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (1)
-  (5)|(4)
-  (9)|(8)|(2)|(3)
+  (5)(4)
+  (9)(8)(2)(3)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (1)
-  (4)|(5)
-  (8)|(9)|(2)|(3)
+  (4)(5)
+  (8)(9)(2)(3)
   ~~~
 
 - 
   ~~~[tree](itemShape=circle,itemSize=30,height=200,width=300)
   (1)
-  (4)|(5)
-  (8)|(9)|(3)|(2)
+  (4)(5)
+  (8)(9)(3)(2)
   ~~~
   
 Source [www.sanfoundry.com/...](https://www.sanfoundry.com/data-structure-questions-answers-binary-tree-properties/)
