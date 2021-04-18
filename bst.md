@@ -8,7 +8,7 @@ Cây (Tree) là dạng cấu trúc dữ liệu cơ bản và hữu dụng trong 
 
 Nút con bên trái là gốc của cây con trái (left-subtree), nút con bên phải là gốc của cây con phải (right-subtree).
 
-~~~[tree](itemShape=circle,itemSize=38,height=200,width=300)
+~~~[tree](shape=circle,size=38,height=200,width=300)
 (Root)
 (L)(R)
 (LL)(LR)(RL)(RR)
@@ -43,7 +43,7 @@ Từ đó cây nhị phân tìm kiếm được thiết kế kết hợp hài h�
 
 Minh họa quá trình tìm kiếm số **6** trong cây nhị phân tìm kiếm như sau:
 
-~~~[tree](itemShape=circle,itemSize=34,height=200,width=300)
+~~~[tree](shape=circle,size=34,height=200,width=300)
 (8)
 (4)(15)
 (2)(6)(9)(16)
@@ -67,7 +67,7 @@ Dễ thấy với cây nhị phân tìm kiếm cân bằng như trên với mỗ
 
 9 4 6 20 70 15 1
 
-~~~[tree](itemShape=circle,itemSize=34,height=200)
+~~~[tree](shape=circle,size=34,height=200)
 (9)
 
 (9){"c": "red", "t": "4"}
