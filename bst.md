@@ -9,9 +9,9 @@ Cây (Tree) là dạng cấu trúc dữ liệu cơ bản và hữu dụng trong 
 Nút con bên trái là gốc của cây con trái (left-subtree), nút con bên phải là gốc của cây con phải (right-subtree).
 
 ~~~[tree](shape=circle,size=38,height=200,width=300)
-(Root)
-(L)(R)
-(LL)(LR)(RL)(RR)
+(R){"t": "root"}
+(L){"t": "left"}(R){"t": "right"}
+(L)(R)(L)(R)
 ~~~
 
 ## Ứng dụng
@@ -65,10 +65,14 @@ Dễ thấy với cây nhị phân tìm kiếm cân bằng như trên với mỗ
 
 ### Thêm (insert)
 
-9 4 6 20 70 15 1
+Ví dụ ta thêm lần lượt các phần tử sau vào cây nhị phân rỗng ban đầu:
+
+`9 4 6 20 70 15 1`
 
 
 ~~~[tree](shape=circle,size=34,height=200)
+()
+
 (9)
 
 (9){"c": "red", "f": "4"}
