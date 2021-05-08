@@ -6,7 +6,7 @@ Cấu trúc dữ liệu cây (tree) bao gồm 1 nút gốc (root) và các nút 
 
 Cây nhị phân là cấu trúc dữ liệu dạng cây trong đó mỗi nút có tối đa 2 nút con, đây là cấu trúc dữ liệu phổ biến và rất hữu dụng trong khoa học máy tính. Ví dụ cây nhị phân có 8 nút được biểu diễn như hình sau:
 
-```[tree](size=30,height=200,width=300)
+```[tree](size=34,height=200,width=300)
 (A)
 (B)(C)
 (D)(E)()(F)
@@ -29,7 +29,7 @@ Với mỗi nút ta có thể có nút con trái và/hoặc nút con phải, tro
 
 Mỗi nút có chính xác 0 hoặc 2 nút con.
 
-```[tree](size=30,height=200,width=300)
+```[tree](size=34,height=200,width=300)
 (A)
 (B)(C)
 (D)(E)(F)(G)
@@ -45,7 +45,7 @@ Tính chất:
 - Trừ tầng cuối, mỗi tầng của cây đều được lấp đầy các nút
 - Ở tầng cuối các nút được lấp đầy theo thứ tự trái qua phải
 
-```[tree](size=30,height=200,width=300)
+```[tree](size=34,height=200,width=300)
 (A)
 (B)(C)
 (D)(E)(F)(G)
@@ -61,7 +61,7 @@ Tính chất:
 
 Là cây nhị phân trong đó tất cả nút trong đều có 2 nút con và tất cả nút lá đều ở cùng độ sâu.
 
-```[tree](size=30,height=200)
+```[tree](size=34,height=200)
 (A)
 (B)(C)
 (D)(E)(F)(G)
@@ -79,7 +79,7 @@ Cây cân bằng là cây nhị phân trong đó với chính nó và mọi cây
 
 Ví dụ cây cân bằng
 
-```[tree](size=30,height=200,width=300)
+```[tree](size=34,height=200,width=300)
 (A)
 (B)(C)
 (D)(E)
@@ -87,7 +87,7 @@ Ví dụ cây cân bằng
 
 Cây không cân bằng
 
-```[tree](size=30,height=200,width=300)
+```[tree](size=34,height=200,width=300)
 (A)
 (B)(C)
 (D)()()(E)
@@ -96,7 +96,7 @@ Cây không cân bằng
 
 ## Cách biểu diễn (Representation)
 
-```[tree](size=30,height=200,width=300)
+```[tree](size=34,height=200,width=300)
 (A)
 (B)(C)
 (D)(E)(F)()
@@ -132,7 +132,7 @@ Cây nhị phân tìm kiếm là cây nhị phân mà trong đó với chính n�
 
 Ví dụ cây nhị phân tìm kiếm
 
-```[tree](size=30,height=200)
+```[tree](size=34,height=200)
 (50)
 (30)(70)
 (23)(35)()(80)
@@ -141,7 +141,7 @@ Ví dụ cây nhị phân tìm kiếm
 
 Độ cao trung bình của 1 cây nhị phân được sinh ra ngẫu nhiên là O(log n), do đó thời gian thao tác trung bình trên cây nhị phân là O(log n). Tuy nhiên có những trường hợp độ cao cây nhị phân có thể lớn hơn nhiều, trong trường hợp xấu nhất độ cao cây có thể là O(n) do đó thời gian thao tác cũng là O(n). Chúng ta xem xét các ví dụ sau:
 
-```[tree](size=30,height=300,width=300)
+```[tree](size=34,height=300,width=300)
 (50)
 (43)(54)
 (38)()
@@ -149,7 +149,7 @@ Ví dụ cây nhị phân tìm kiếm
 (20)()
 ```
 
-```[tree](size=30,height=300,width=300)
+```[tree](size=34,height=300,width=300)
 (33)
 ()(42)
 (){"p":"42"}(45){"p":"42"}
@@ -157,25 +157,9 @@ Ví dụ cây nhị phân tìm kiếm
 (48){"p":"57"}(66){"p":"57"}
 ```
 
-<!-- ## Ứng dụng
-
-Để quản lý 1 tập các phần tử có thứ tự (được sắp xếp theo thứ tự để tiện lợi trong thao tác thêm phần tử mới vào trong tập và lấy ra phần tử mong muốn), chúng ta có các kiểu dữ liệu cơ bản đó là:
-
-- Mảng tuyến tính (array)
-- Danh sách liên kết (linked list)
-
-Cả 2 cách lưu trữ này đều có ưu điểm và nhược điểm riêng với các thao tác nhất định trong việc quản lý tập có thứ tự:
-
-|                    | Ưu điểm                                   | Nhược điểm                                                                          |
-|--------------------|-------------------------------------------|-------------------------------------------------------------------------------------|
-| Mảng               | Tìm kiếm nhanh bằng binary search O(logn) | Thêm và xóa chậm do phải dịch chuyển toàn bộ các phần tử phía sau điểm cần sửa O(n) |
-| Danh sách liên kết | Thêm hay xóa 1 phần tử tức thì O(1)       | Thao tác tìm kiếm chậm do phải duyệt qua từng phần tử từ đầu O(n)                   |
-
-Từ đó cây nhị phân tìm kiếm được thiết kế kết hợp hài hòa ưu điểm của 2 kiểu dữ liệu trên để trở thành cấu trúc dữ liệu hiệu quả trong việc lưu trữ và truy xuất tập các phần tử có thứ tự. Các phần tử trong cây nhị phân tìm kiếm được sắp xếp theo thứ tự nhất định, các thao tác cơ bản như thêm, xóa và tìm kiếm đều có thể được thực hiện hiệu quả trong thời gian tính toán có độ phức tạp O(logn) trong đó n là số lượng các phần tử trong tập. -->
-
 ## Thao tác (operations)
 
-| No | Thao tác             | Trường hợp trung bình | Trường hợp xấu nhất |
+| No | Thao tác             | Thời gian trung bình  | Thời gian xấu nhất  |
 |----|----------------------|-----------------------|---------------------|
 | 1  | Tìm kiếm             | O(logn)               | O(n)                |
 | 2  | Tìm phần tử nhỏ nhất | O(logn)               | O(n)                |
@@ -194,36 +178,67 @@ Từ đó cây nhị phân tìm kiếm được thiết kế kết hợp hài h�
 3. Nếu phần tử cần tìm nhỏ hơn gốc ta lặp lại bước 1 với cây con bên trái (loại trừ gốc và cây con phải).
 4. Nếu phần tử cần tìm lớn hơn gốc ta lặp lại bước 1 với cây con bên phải (loại trừ gốc và cây con trái).
 
-Minh họa quá trình tìm kiếm số **6** trong cây nhị phân tìm kiếm như sau:
+Minh họa quá trình tìm kiếm số **25** trong cây nhị phân tìm kiếm như sau:
 
-~~~[tree](shape=circle,size=34,height=200,width=300)
-(8)
-(4)(15)
-(2)(6)(9)(16)
+```[tree](size=34,height=200,width=300)
+(30)
+(23)(35)
+(11)(25)(31)(42)
 
-(8){"c": "red", "f": 6}
-(4)(15)
-(2)(6)(9)(16)
+(30){"c": "red", "f": "25"}
+(23)(35)
+(11)(25)(31)(42)
 
-(8){"o": 0.3}
-(4){"c": "red","f": 6}(15){"o": 0.3}
-(2)(6)(9){"o": 0.3}(16){"o": 0.3}
+(30)
+(23){"c": "red","f": "25"}(35)
+(11)(25)(31)(42)
 
-(8){"o": 0.3}
-(4){"o": 0.3}(15){"o": 0.3}
-(2){"o": 0.3}(6){"c": "red", "t": "tìm thấy"}(9){"o": 0.3}(16){"o": 0.3}
-~~~
+(30)
+(23)(35)
+(11)(25){"c": "red", "t": "tìm thấy"}(31)(42)
+```
 
-Dễ thấy với cây nhị phân tìm kiếm cân bằng như trên với mỗi phép so sánh ta loại trừ được 1 nửa số phần tử cần tìm.
+Với cây nhị phân tìm kiếm cân bằng như trên với mỗi phép so sánh ta loại trừ được 1 nửa số phần tử của tập cần tìm.
+
+### Min và Max
+
+- Phần tử tận cùng trái (left-most) của cây là phần tử nhỏ nhất
+- Phần tử tận cùng phải (right-most) của cây là phần tử lớn nhất
+
+### Tìm phần tử sau (Successor) và trước (Predecessor)
 
 ### Thêm (insert)
 
-Ví dụ ta thêm lần lượt các phần tử sau vào cây nhị phân rỗng ban đầu:
+Ví dụ 1. Thêm số **24** vào cây nhị phân tìm kiếm
+
+```[tree](size=34,height=220,width=300)
+(30)
+(23)(35)
+(11)(25)(31)(42)
+
+(30){"f": "24","c":"red"}
+(23)(35)
+(11)(25)(31)(42)
+
+(30)
+(23){"f": "24","c":"red"}(35)
+(11)(25)(31)(42)
+
+(30)
+(23)(35)
+(11)(25){"f": "24","c":"red"}(31)(42)
+
+(30)
+(23)(35)
+(11)(25)(31)(42)
+(24){"p":"25"}(){"p":"25"}
+```
+
+Ví dụ 2. Thêm lần lượt các phần tử sau vào cây nhị phân rỗng ban đầu:
 
 `9 4 6 20 70 15 1`
 
-
-~~~[tree](shape=circle,size=34,height=200)
+```[tree](size=34,height=200)
 ()
 
 (9)
@@ -286,6 +301,6 @@ Ví dụ ta thêm lần lượt các phần tử sau vào cây nhị phân rỗn
 (9)
 (4)(20)
 (1)(6)(15)(70)
-~~~
+```
 
 ### Xóa (delete)
