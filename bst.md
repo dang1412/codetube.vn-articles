@@ -205,7 +205,24 @@ Với cây nhị phân tìm kiếm cân bằng như trên với mỗi phép so s
 - Phần tử tận cùng trái (left-most) của cây là phần tử nhỏ nhất
 - Phần tử tận cùng phải (right-most) của cây là phần tử lớn nhất
 
+```[tree](size=34,height=250)
+(50)
+(30)(70)
+(23)(35)()(80)
+(11){"t":"Min","c":"red"}(25)(31)(42)(73){"p":"80"}(85){"p":"80","c":"red","t":"Max"}
+```
+
 ### Tìm phần tử sau (Successor) và trước (Predecessor)
+
+Nút trước và nút sau trong cây nhị phân tìm kiếm được xác định bởi thứ tự các nút được sắp xếp tăng dần (theo trình tự duyệt giữa). Ví dụ ta có nút x trong cây nhị phân tìm kiếm, các bước để tìm nút sau và nút trước như sau
+
+- Nút sau (Successor)
+  - Nếu cây con phải của nút x là khác rỗng, ta có nút sau của x là nút tận cùng trái của cây con phải của x.
+  - Nếu cây con phải của nút x là rỗng và nếu tồn tại nút sau của x là y, thì y là nút tổ tiên (ancestor) của x gần nhất thỏa mãn: nút con trái của y cũng là tổ tiên của x.
+
+- Nút trước (Predecessor)
+  - Nếu cây con trái của nút x là khác rỗng, ta có nút trước của x là nút tận cùng phải của cây con trái của x.
+  - Nếu cây con trái của nút x là rỗng và nếu tồn tại nút trước của x là y, thì y là nút tổ tiên (ancestor) của x gần nhất thỏa mãn: nút con phải của y cũng là tổ tiên của x.
 
 ### Thêm (insert)
 
@@ -304,3 +321,40 @@ Ví dụ 2. Thêm lần lượt các phần tử sau vào cây nhị phân rỗn
 ```
 
 ### Xóa (delete)
+
+Để xóa 1 nút trên cây nhị phân tìm kiếm ta cần đảm bảo các nút còn lại vẫn thỏa mãn tính chất của cây nhị phân tìm kiếm: tất cả các nút thuộc cây con trái <= nút gốc <= tất cả các nút thuộc cây con phải. Ví dụ x là nút cần xóa, ta xét 3 trường hợp như sau:
+
+- Nếu x là nút lá ta đơn giản loại bỏ nút x khỏi cây, các phần tử còn lại giũ nguyên.
+- Nếu x chỉ có 1 nút con (trái hoặc phải), ta xóa nút x và thay thế x bằng nút con của nó, các phần tử còn lại giữ nguyên.
+- Nếu x có cả nút con trái và nút con phải:
+  - Ghi đè phần tử nhỏ nhất y thuộc cây con phải của x (y là nút tận cùng trái thuộc cây con phải của x) vào vị trí của x.
+  - Xóa y, vì y là nút tận cùng trái nên y ko có nút con trái, bài toán trở về 1 trong 2 trường hợp đơn giản ở trên.
+
+Ví dụ trường hợp 3, xóa nút gốc **30** trong cây nhị phân tìm kiếm sau
+
+```[tree](size=34,height=250)
+(31){"c":"orange"}
+(30)(50)
+(23)(35)()(70)
+(11)(25)(32)(42)(67){"p":"70"}(75){"p":"70"}
+
+(31){"c":"orange"}
+(30)(50){"c":"red","t":"nút tận cùng trái của cây con phải"}
+(23)(35)()(70)
+(11)(25)(32)(42)(67){"p":"70"}(75){"p":"70"}
+
+(50){"c":"red","t":"ghi đè lên nút cần xóa","id":"r"}
+(30)(50){"c":"red","t":"xóa nút này"}
+(23)(35)()(70)
+(11)(25)(32)(42)(67){"p":"70"}(75){"p":"70"}
+
+(50){"id":"r"}
+(30)(50){"c":"red","t":"xóa nút này"}
+(23)(35)()(70){"c":"green","t":"nút cần xóa có 1 nút con"}
+(11)(25)(32)(42)(67){"p":"70"}(75){"p":"70"}
+
+(50){"id":"r"}
+(30)(70){"c":"green"}
+(23)(35)(67){"p":"70"}(75){"p":"70"}
+(11)(25)(32)(42)
+```
