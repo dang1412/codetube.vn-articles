@@ -330,31 +330,39 @@ Ví dụ 2. Thêm lần lượt các phần tử sau vào cây nhị phân rỗn
   - Ghi đè phần tử nhỏ nhất y thuộc cây con phải của x (y là nút tận cùng trái thuộc cây con phải của x) vào vị trí của x.
   - Xóa y, vì y là nút tận cùng trái nên y ko có nút con trái, bài toán trở về 1 trong 2 trường hợp đơn giản ở trên.
 
-Ví dụ trường hợp 3, xóa nút gốc **31** trong cây nhị phân tìm kiếm sau
+Ví dụ trường hợp 3, xóa nút gốc **36** trong cây nhị phân tìm kiếm sau
 
 ```[tree](size=34,height=250)
-(31){"c":"red","t":"xóa nút này"}
+(36){"c":"red","t":"xóa nút này"}
 (30)(50)
 (23)(35)(45)(70)
-(11)(25)(32)(42)()(48)(67)(75)
+(){"p":"45"}(48){"p":"45"}(67){"p":"70"}(75){"p":"70"}
 
-(31){"c":"red","t":"xóa nút này"}
+(36){"c":"red","t":"xóa nút này"}
 (30)(50)
 (23)(35)(45){"c":"green","t":"nút nhỏ nhất cây con phải"}(70)
-(11)(25)(32)(42)()(48)(67)(75)
+(){"p":"45"}(48){"p":"45"}(67){"p":"70"}(75){"p":"70"}
 
 (45){"c":"green","t":"ghi đè lên nút cần xóa"}
 (30)(50)
 (23)(35)(45){"c":"red","t":"xóa nút này","id":"d"}(70)
-(11)(25)(32)(42)()(48)(67)(75)
+(){"p":"d"}(48){"p":"d"}(67){"p":"70"}(75){"p":"70"}
 
 (45)
 (30)(50)
 (23)(35)(45){"c":"red","t":"xóa nút này","id":"d"}(70)
-(11)(25)(32)(42)()(48){"t":"nút con duy nhất"}(67)(75)
+(){"p":"d"}(48){"p":"d","t":"nút con duy nhất"}(67){"p":"70"}(75){"p":"70"}
 
 (45)
 (30)(50)
 (23)(35)(48)(70)
-(11)(25)(32)(42)(67){"p":"70"}(75){"p":"70"}
+(67){"p":"70"}(75){"p":"70"}
+```
+
+## Minh hoạ trực quan
+
+Các bạn nhập input cho các thao tác Insert, Delete để xem cách thuật toán hoạt động theo từng bước
+
+```[bstvisual](size=32,height=250)
+31 30 23 50 45 48 70 67 75
 ```
