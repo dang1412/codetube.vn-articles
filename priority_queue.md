@@ -70,20 +70,20 @@ Thao tác heapify được thực hiện trên cây con của heap có gốc ở
   - Lặp lại heapify với cây con có gốc ở vị trí *largest*.
 
 ```[tree](size=34,height=200)
-(2){"c": "red", "t": "heapify vị trí "}
+(2){"c": "red", "t": "heapify vị trí này"}
 (4)(7)
 (1)(3)(5)()
 
-(2){"c": "red"}
+(2){"c": "red", "t": "heapify vị trí này"}
 (4)(7){"c": "green", "t": "lớn nhất trong 3"}
 (1)(3)(5)()
 
 (7)
-(4)(2){"c": "red"}
+(4)(2){"c": "red", "t": "heapify vị trí này"}
 (1)(3)(5)()
 
 (7)
-(4)(2){"c": "red"}
+(4)(2){"c": "red", "t": "heapify vị trí này"}
 (1)(3)(5){"c": "green", "t": "lớn hơn cha"}()
 
 (7)
