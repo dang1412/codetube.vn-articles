@@ -8,9 +8,9 @@ Với các phần tử có giá trị ưu tiên giống nhau thứ tự lấy ra
 
 Giống như hàng đợi thông thường chúng ta có các thao tác cơ bản sau
 
-- Push: thêm phần tử.
-- Top: trả về phần tử đầu tiên (có mức ưu tiên lớn nhất).
-- Pop: trả về phần tử đầu tiên và xóa nó khỏi hàng đợi.
+- **Push**: thêm phần tử.
+- **Top**: trả về phần tử đầu tiên (có mức ưu tiên lớn nhất).
+- **Pop**: trả về phần tử đầu tiên và xóa nó khỏi hàng đợi.
 
 ## Các cách cài đặt hàng đợi ưu tiên
 
@@ -63,11 +63,33 @@ Do heap là 1 cây nhị phân hoàn thiện chúng ta dùng mảng để biểu
 
 Thao tác heapify được thực hiện trên cây con của heap có gốc ở vị trí i:
 
-- So sánh i và 2 phần tử ở vị trí 2*i + 1 (con trái), 2*i + 2 (con phải)
-- Nếu phần tử i là lớn nhất trong 3 phần tử thao tác heapify dừng ở đây
-- Nếu vị trí phần tử con trái hoặc phải là lớn nhất *largest* (2*i + 1 hoặc 2*i + 2)
+- So sánh i và 2 phần tử ở vị trí 2*i + 1 (con trái), 2*i + 2 (con phải).
+- Nếu phần tử i là lớn nhất trong 3 phần tử thao tác heapify dừng ở đây.
+- Nếu vị trí phần tử con trái hoặc phải là lớn nhất *largest* (2*i + 1 hoặc 2*i + 2).
   - Đổi chỗ 2 phần tử *largest* và *i*.
   - Lặp lại heapify với cây con có gốc ở vị trí *largest*.
+
+```[tree](size=34,height=200)
+(2){"c": "red", "t": "heapify vị trí "}
+(4)(7)
+(1)(3)(5)()
+
+(2){"c": "red"}
+(4)(7){"c": "green", "t": "lớn nhất trong 3"}
+(1)(3)(5)()
+
+(7)
+(4)(2){"c": "red"}
+(1)(3)(5)()
+
+(7)
+(4)(2){"c": "red"}
+(1)(3)(5){"c": "green", "t": "lớn hơn cha"}()
+
+(7)
+(4)(5)
+(1)(3)(2){"c": "red"}()
+```
 
 Typescript
 
@@ -104,9 +126,9 @@ Lặp với i = n/2 - 1 cho đến 0
 
 ## Cài đặt hàng đợi ưu tiên dùng max-heap
 
-- Push: thêm phần tử
-- Top: trả về phần tử đầu tiên (có mức ưu tiên lớn nhất)
-- Pop: trả về phần tử đầu tiên và xóa nó khỏi hàng đợi
+- *Push*: thêm phần tử
+- *Top*: trả về phần tử đầu tiên (có mức ưu tiên lớn nhất)
+- *Pop*: trả về phần tử đầu tiên và xóa nó khỏi hàng đợi
 
 ### Push
 
@@ -157,20 +179,20 @@ function push(item: T): void {
 
 ```[tree](size=34,height=200)
 (9)
-(3)(7)
-(1)(4)(5)(2)
+(4)(7)
+(1)(3)(5)(2)
 
 (2){"c": "red"}
-(3)(7)
-(1)(4)(5)()
+(4)(7)
+(1)(3)(5)()
 
 (7)
-(3)(2){"c": "red"}
-(1)(4)(5)()
+(4)(2){"c": "red"}
+(1)(3)(5)()
 
 (7)
-(3)(5)
-(1)(4)(2){"c": "red"}()
+(4)(5)
+(1)(3)(2){"c": "red"}()
 ```
 
 Typescript
@@ -203,7 +225,7 @@ function pop(): T | null {
 
 ## Minh họa
 
-Chú ý không sử dụng nhãn trùng lặp cho các nút.
+Chú ý không sử dụng nhãn trùng lặp cho các nút. Số hiển thị trong nút là mức độ ưu tiên, chữ bên cạnh trong ngoặc vuông là chỉ số index trong mảng, tiếp đến là label để phân biệt các nút.
 
 ~~~[pqvisual](size=32,height=250)
 A 9, B 3, C 5, D 1, E 4, F 2
