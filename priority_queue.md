@@ -227,9 +227,9 @@ function pop(): T | null {
 
 Chú ý không sử dụng nhãn trùng lặp cho các nút. Số hiển thị trong nút là mức độ ưu tiên, chữ bên cạnh trong ngoặc vuông là chỉ số index trong mảng, tiếp đến là label để phân biệt các nút.
 
-~~~[pqvisual](size=32,height=250)
+```[pqvisual](size=32,height=250)
 A 9, B 3, C 5, D 1, E 4, F 2
-~~~
+```
 
 ## Source code
 
@@ -311,4 +311,10 @@ export class PriorityQueue<T> {
     this.items[j] = tmp
   }
 }
+```
+
+## Bài viết liên quan
+
+```[articlecards]
+iHQRk7ODINxd2AZ4Dbcxa
 ```
