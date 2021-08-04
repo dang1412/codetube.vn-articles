@@ -274,7 +274,7 @@ function pop(): T | null {
 Cho thao tác `insert` các bạn nhập giá trị ưu tiên và nhãn (vd A, B, C...) cho phần tử muốn thêm. Nhãn dùng để phân biệt các phần tử khác nhau cả trong trường hợp giá trị ưu tiên bằng nhau nên chú ý không sử dụng nhãn trùng lặp cho các nút. Số hiển thị trong nút là giá trị ưu tiên.
 
 ```[pqvisual](size=32,height=250)
-A 9, B 3, C 5, D 1, E 4, F 2
+A 9, B 4, C 5, D 1, E 3, F 2
 ```
 
 ## Source code
