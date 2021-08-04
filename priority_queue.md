@@ -32,6 +32,16 @@ Cách cài đặt đơn sơ nhất (naive solution) là sử dụng mảng khôn
 - **Top** Duyệt qua tất cả các phần tử để tìm và trả về phần tử có độ ưu tiên lớn nhất, độ phức tạp O(n).
 - **Pop** Thực hiện duyệt tìm vị trí phần tử có độ ưu tiên lớn nhất, sau đó xóa phần tử bằng cách dịch tất cả các phần tử sau vị trí này lên trước 1 vị trí, độ phức tạp O(n).
 
+Minh họa xóa phần tử 6 trong mảng sau
+
+```[linear](shape=rect,size=30,height=60,offsetY=10)
+3 6{"c":"red"} 2 1 4 5
+3 2  1 4 5
+3 2 1  4 5
+3 2 1 4  5
+3 2 1 4 5
+```
+
 ### Dùng danh sách liên kết có thứ tự
 
 Có thể cải tiến cách cài đặt trên bằng cách sử dụng danh sách liên kết được sắp xếp theo thứ tự mức ưu tiên cao đến thấp.
@@ -69,23 +79,38 @@ Thao tác heapify được thực hiện trên cây con của heap có gốc ở
   - Đổi chỗ 2 phần tử *largest* và *i*.
   - Lặp lại heapify với cây con có gốc ở vị trí *largest*.
 
-```[tree](size=34,height=200)
+```[visual](size=34,height=200)
+linear(id=2,offsetY=5,shape=rect)
+2{"c":"red"} 4 7 1 3 5
+tree(offsetY=55)
 (2){"c": "red", "t": "heapify vị trí này"}
 (4)(7)
 (1)(3)(5)()
 
+linear(id=2,offsetY=5,shape=rect)
+2{"c":"red"} 4 7{"c":"green"} 1 3 5
+tree(offsetY=55)
 (2){"c": "red", "t": "heapify vị trí này"}
 (4)(7){"c": "green", "t": "lớn nhất trong 3"}
 (1)(3)(5)()
 
+linear(id=2,offsetY=5,shape=rect)
+7 4 2{"c":"red"} 1 3 5
+tree(offsetY=55)
 (7)
 (4)(2){"c": "red", "t": "heapify vị trí này"}
 (1)(3)(5)()
 
+linear(id=2,offsetY=5,shape=rect)
+7 4 2{"c":"red"} 1 3 5{"c":"green"}
+tree(offsetY=55)
 (7)
 (4)(2){"c": "red", "t": "heapify vị trí này"}
 (1)(3)(5){"c": "green", "t": "lớn hơn cha"}()
 
+linear(id=2,offsetY=5,shape=rect)
+7 4 5 1 3 2{"c":"red"}
+tree(offsetY=55)
 (7)
 (4)(5)
 (1)(3)(2){"c": "red"}()
@@ -135,15 +160,24 @@ Lặp với i = n/2 - 1 cho đến 0
 - Thêm phần tử mới vào cuối mảng
 - Bắt đầu từ phần tử cha của phần tử mới, thực hiện thao tác heapify ngược lên trên (Chú ý thao tác này ngược với thao tác heapify được nhắc ở trên là đi theo hướng xuống dưới cây).
 
-```[tree](size=34,height=200)
+```[visual](size=34,height=200)
+linear(id=2,offsetY=5,shape=rect)
+9 4 5 1 3 2
+tree(offsetY=55)
 (9)
 (4)(5)
 (1)(3)(2)()
 
+linear(id=2,offsetY=5,shape=rect)
+9 4 5 1 3 2 7{"c":"green"}
+tree(offsetY=55)
 (9)
 (4)(5)
 (1)(3)(2)(7){"c":"green"}
 
+linear(id=2,offsetY=5,shape=rect)
+9 4 7{"c":"green"} 1 3 2 5
+tree(offsetY=55)
 (9)
 (4)(7){"c":"green"}
 (1)(3)(2)(5)
@@ -177,19 +211,31 @@ function push(item: T): void {
 - Gán phần tử cuối cùng của Heap đè lên phần tử đầu tiên.
 - Thực hiện thao tác heapfify với phần tử đầu tiên.
 
-```[tree](size=34,height=200)
+```[visual](size=34,height=200)
+linear(id=2,offsetY=5,shape=rect)
+9 4 7 1 3 5 2
+tree(offsetY=55)
 (9)
 (4)(7)
 (1)(3)(5)(2)
 
+linear(id=2,offsetY=5,shape=rect)
+2{"c":"red"} 4 7 1 3 5
+tree(offsetY=55)
 (2){"c": "red"}
 (4)(7)
 (1)(3)(5)()
 
+linear(id=2,offsetY=5,shape=rect)
+7 4 2{"c":"red"} 1 3 5
+tree(offsetY=55)
 (7)
 (4)(2){"c": "red"}
 (1)(3)(5)()
 
+linear(id=2,offsetY=5,shape=rect)
+7 4 5 1 3 2{"c":"red"}
+tree(offsetY=55)
 (7)
 (4)(5)
 (1)(3)(2){"c": "red"}()
@@ -225,7 +271,7 @@ function pop(): T | null {
 
 ## Minh họa
 
-Chú ý không sử dụng nhãn trùng lặp cho các nút. Số hiển thị trong nút là mức độ ưu tiên, chữ bên cạnh trong ngoặc vuông là chỉ số index trong mảng, tiếp đến là label để phân biệt các nút.
+Cho thao tác `insert` các bạn nhập giá trị ưu tiên và nhãn (vd A, B, C...) cho phần tử muốn thêm. Nhãn dùng để phân biệt các phần tử khác nhau cả trong trường hợp giá trị ưu tiên bằng nhau nên chú ý không sử dụng nhãn trùng lặp cho các nút. Số hiển thị trong nút là giá trị ưu tiên.
 
 ```[pqvisual](size=32,height=250)
 A 9, B 3, C 5, D 1, E 4, F 2
