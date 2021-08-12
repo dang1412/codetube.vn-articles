@@ -2,7 +2,7 @@
 
 Cây đỏ đen (red black tree) là cây nhị phân tìm kiếm được ràng buộc thêm bởi 1 số điều kiện (constraint) để đảm bảo cây luôn ở trạng thái tương đối cân bằng (độ dài giữa các nhánh cây không chênh lệch nhau quá lớn), nhằm tối đa hóa hiệu quả các thao tác tìm kiếm và lưu trữ trên cây.
 
-1 dạng khác của cây nhị phân tự cân bằng là cây AVL, tuy nhiên điều kiện cân bằng của cây đỏ đen được thiết kế lỏng hơn so với cây AVL. Ở cây AVL độ dài 2 nhánh cây chênh nhau không quá 1 đơn vị thì ở cây đỏ đen 1 nhánh cây có độ dài **không quá 2 lần** nhánh còn lại (với mọi nút). Do tính chất lỏng hơn này trong trường hợp thực hiện nhiều lần các thao tác thêm và xóa ở cây đỏ đen sẽ hiệu quả hơn so với cây AVL vì không phải tái cấu trúc cây quá nhiều lần.
+1 dạng khác của cây nhị phân tự cân bằng là cây AVL, tuy nhiên điều kiện cân bằng của cây đỏ đen được thiết kế lỏng hơn so với cây AVL. Ở cây AVL độ dài 2 nhánh cây chênh nhau không quá 1 đơn vị thì ở cây đỏ đen 1 nhánh cây có độ dài **không quá 2 lần** nhánh còn lại (với mọi nút). Do tính chất lỏng hơn này trong trường hợp thực hiện nhiều lần các thao tác thêm và xóa với cây đỏ đen sẽ hiệu quả hơn so với cây AVL vì không phải tái cấu trúc cây quá nhiều lần.
 
 ## Tính chất cây đỏ đen
 
@@ -34,7 +34,7 @@ Ngoài các thao tác chính của cây nhị phân tìm kiếm (Thêm, xóa), c
 
 Từ trạng thái 1 -> trạng thái 2 ta có thao tác xoay trái đối với x. Ngược lại từ 2 -> 1 ta có thao tác xoay phải đối với y.
 
-```[tree](size=34)
+```[tree](size=40)
 (P)
 (x){"c":"green"}
 (a){"c":"black"}(y){"c":"red"}
@@ -59,7 +59,10 @@ Cây đỏ đen có các thao tác thêm, xóa, tìm kiếm, tìm phần tử tr
 - Thêm (Insert)
 - Xóa (Delete)
 
-Ta để ý nút đỏ mang ý nghĩa là cây đang lệch về phía nhánh cây chứa nó, từ đó ta hiểu được logic trong cách cài đặt cũng như dễ nhớ hơn.
+Trước khi đi vào phần cài đặt cụ thể ta chú ý 2 điều sau để nắm được logic của thuật toán:
+
+- Nút đỏ mang ý nghĩa là cây đang lệch về phía nhánh cây chứa nó.
+- Nếu T là cây đỏ đen thì mọi cây con của T đều thỏa mãn tính chất 4 và 5.
 
 ## Thao tác thêm (Insert)
 
@@ -71,10 +74,10 @@ Gọi cây hiện tại `T`, nút mới thêm `K`, nút cha của nút mới th�
 
 Nếu `K` là gốc và màu đỏ, ta chuyển màu `K` thành đen. Trường hợp này độ cao màu đen `bh` của cây tăng thêm 1.
 
-> Thuật toán gọi vào đây trong 2 trường hợp:
->
-> - Thêm K vào cây rỗng
-> - Gọi đệ qui từ dưới lên ở trường hợp `3.1` (được nhắc đến ở dưới)
+Chú ý thuật toán gọi vào đây ở 1 trong 2 trường hợp:
+
+- Thêm K vào cây rỗng
+- Gọi đệ qui từ dưới lên ở trường hợp `3.1` (được nhắc đến ở dưới)
 
 ### Case 2: Nút cha `P` màu đen
 
@@ -133,7 +136,7 @@ Do `G` chuyển màu từ đen sang đỏ có khả năng gặp 1 nút đỏ li�
 (A)
 (B){"c":"black","t":"G"}
 (C){"c":"black","t":"U"}(E){"p":"D","c":"red","t":"K"}
-(G){"p":"E","c":"black","t":"E's child"}(D){"c":"red","t":"P","p":"E"}
+(G){"p":"E","c":"black","t":"E's left child"}(D){"c":"red","t":"P","p":"E"}
 ```
 
 **Case 3.2.3** `P` là con trái của `G`, `K` là con trái của `P`, trường hợp này ngược lại với 3.2.1:
@@ -158,6 +161,18 @@ Do `G` chuyển màu từ đen sang đỏ có khả năng gặp 1 nút đỏ li�
 - Thực hiện phép xoay trái đối với `P`.
 - Trở về case 3.2.3 (với `K` và `P` đổi vai trò cho nhau).
 
+```[tree](size=40)
+(A)
+(B){"c":"black","t":"G"}
+(C){"c":"red","t":"P"}(D){"c":"black","t":"U"}
+(E){"c":"black"}(F){"c":"red","t":"K"}
+
+(A)
+(B){"c":"black","t":"G"}
+(F){"c":"red","t":"K"}(D){"c":"black","t":"U"}
+(C){"c":"red","t":"P"}(G){"c":"black","t":"F's right child"}
+```
+
 ### Tóm tắt thuật toán insert
 
 - Thêm nút mới và gán màu của nút mới là đỏ.
@@ -170,9 +185,9 @@ Do `G` chuyển màu từ đen sang đỏ có khả năng gặp 1 nút đỏ li�
 
 Trước hết ta làm theo các bước xóa như ở trong cây nhị phân tìm kiếm thông thường để đưa về trường hợp xóa nút `x` là nút lá hoặc chỉ có 1 con (xem phần xóa trong bài về cây nhị phân tìm kiếm).
 
-Ý tưởng của thuật toán là kiểm tra cây đang lệch về phía nào bằng cách xem nút đỏ đang nằm ở đâu quanh chỗ nút muốn xóa và cố gắng chuyển chỗ lệch đó về phía nhánh của phần tử này. Hay nói cách khác, tìm cách **chuyển màu của nút muốn xóa thành đỏ** mà vẫn giữ tính chất cây đỏ đen bằng cách vận dụng các thao tác xoay trái, xoay phải và đổi màu, khi đó ta dễ dàng xóa phần tử mà vẫn giữ được tính cân bằng của cây.
+Ý tưởng của thuật toán là kiểm tra cây đang lệch về phía nào bằng cách xem nút đỏ đang nằm ở đâu quanh chỗ nút muốn xóa và cố gắng chuyển chỗ lệch đó về phía nhánh của phần tử này. Hay nói cách khác, tìm cách **chuyển màu của nút muốn xóa thành đỏ** mà vẫn giữ tính chất cây đỏ đen bằng cách vận dụng các thao tác xoay cây và đổi màu, khi đó ta dễ dàng xóa phần tử mà vẫn giữ được tính cân bằng của cây.
 
-Gọi S là nút anh em (sibling) của `x` và `P` là nút cha của `x`. Xét các trường hợp sau:
+Gọi `S` là nút anh em (sibling) của `x` và `P` là nút cha của `x`. Xét các trường hợp sau:
 
 ### Case 1 `x` là nút đỏ
 
@@ -182,7 +197,7 @@ Trường hợp này ta xóa `x` như đối với cây nhị phân tìm kiếm 
 
 Ta thay `x` bằng nút con đỏ của nó và đổi màu nút con đỏ thành đen. Thay 1 nút đen bằng 1 nút đen khác tính chất cây đỏ đen được bảo toàn.
 
-> Trường hợp x là nút đen có 1 nút con NULL và 1 nút con là đen khác NULL ko tồn tại vì vi phạm tính chất 5.
+(Trường hợp x là nút đen có 1 nút con NULL và 1 nút con là đen khác NULL ko tồn tại vì vi phạm tính chất 5).
 
 ### Case 3 `x` là nút màu đen
 
@@ -260,8 +275,7 @@ Ta chỉ xét trường hợp nút con phải của `S` là đen (hoặc NULL), 
 
 (B){"c":"pink","t":"P"}
 (A){"c":"black","t":"x"}(C){"c":"black","t":"new S"}
-(F){"p":"C","c":"pink","t":"left child"}(D){"c":"red","t":"S","p":"C"}
-(){"p":"D"}(E){"p":"D","c":"black"}
+(F){"p":"C","c":"pink","t":"C's left child"}(D){"c":"red","t":"S","p":"C"}
 
 (C){"c":"black","t":"new S"}
 (B){"c":"pink","t":"P"}(D){"c":"red","t":"S"}
@@ -292,9 +306,9 @@ Ta chỉ xét trường hợp nút con phải của `S` là đen (hoặc NULL), 
 
 **Case 3.3.2** nếu nút cha `P` là đen
 
-Trường hợp này nhánh cây con đang xét toàn là đen ta cần gọi đệ qui lên trên nhằm chuyển phần lệch về phía cây con đang xét (đổi màu nút cha `P` sang đỏ).
+Trường hợp này nhánh cây con đang xét toàn là đen ta gọi đệ qui lên trên nhằm chuyển phần lệch về phía cây con đang xét (đổi màu nút cha `P` sang đỏ).
 
-- Ta lặp lại từ đầu case 3 với nhiệm vụ đổi màu nút cha `P` sang đỏ (`P` đóng vai trò là nút `x` mới).
+- Lặp lại từ đầu case 3 với nhiệm vụ đổi màu nút cha `P` sang đỏ (`P` đóng vai trò là nút `x` mới).
 - Với nút cha `P` đỏ, tiếp tục thực hiện các bước như ở 3.3.1.
 
 **Case 3.4** `S` là nút màu đỏ
@@ -325,19 +339,397 @@ Kết thúc **case 3**: sau khi thành công chuyển màu của `x` sang đỏ,
 
 - Thực hiện các bước xóa ban đầu giống với cây nhị phân tìm kiếm thông thường, đưa về TH xóa `x` là nút lá hoặc chỉ có 1 con (ít nhất 1 nút con của `x` là NULL).
 - Nếu nút cần xóa `x` là màu đỏ bỏ qua các bước sau để đến bước cuối cùng (xóa `x` khỏi cây).
-- Nếu `x` là màu đen ta tìm cách chuyển màu `x` sang đỏ, hay nói cách khác là chuyển dịch sự lệch của cây sang nhánh muốn xóa (đỏ tượng trưng cho nhánh cây dài hơn). Ta tìm nút đỏ ở  lần lượt các vị trí sau (đến khi tìm đc thì dừng):
+- Nếu `x` là màu đen ta tìm cách chuyển màu `x` sang đỏ, hay nói cách khác là chuyển dịch sự lệch của cây sang nhánh muốn xóa (đỏ tượng trưng cho nhánh cây dài hơn). Ta tìm nút đỏ lần lượt ở các vị trí sau (đến khi tìm đc thì dừng):
   - Con của `x`.
   - Nút anh em (sibling) của `x`.
   - Con của nút anh em.
   - Cha của `x`.
 - Nếu không tìm thấy đỏ ở các vị trí trên, ta tìm cách chuyển màu nút cha của `x` sang màu đỏ (bằng cách gọi đệ quy bước 2 nhưng là đối với cha của `x`).
-- Khi đã tìm được đỏ ở 1 trong các vị trí này có thể áp dụng các biện pháp xoay cây và đổi màu để chuyển `x` sang đỏ mà vẫn giữ được tính chất của cây.
+- Khi đã tìm được đỏ ở 1 trong các vị trí này có thể áp dụng các biện pháp xoay cây và đổi màu để chuyển `x` sang đỏ mà vẫn giữ được tính chất của cây (các bước cụ thể được nêu ở trên).
 - Xóa `x` khỏi cây như ở cây nhị phân tìm kiếm thông thường.
+
+## Source code
+
+```ts
+export interface RedBlackNode {
+  value: number
+  color: 0 | 1
+  parent: RedBlackNode | null
+  left: RedBlackNode | null
+  right: RedBlackNode | null
+}
+
+function createNode(value: number): RedBlackNode {
+  return {
+    value,
+    color: 1,
+    parent: null,
+    left: null,
+    right: null
+  }
+}
+
+export class RedBlackTree {
+  root: RedBlackNode | null = null
+
+  insert(value: number) {
+    console.log('insert', value)
+    const k = insertNode(this.root, value)
+    if (!k) return
+    if (!this.root) {
+      this.root = k
+    }
+
+    this.fixInsert(k)
+  }
+
+  remove(value: number) {
+    const delNode = searchNode(this.root, value)
+    if (!delNode) return
+
+    // find actual removed node
+    let altNode: RedBlackNode | null = null
+    if (delNode.left && delNode.right) {
+      altNode = findMinNode(delNode.right)
+    }
+
+    const xNode = altNode || delNode
+
+    // fix the node to be deleted
+    this.fixDelete(xNode)
+
+    // override delnode if different, then delete
+    delNode.value = xNode.value
+    this.deleteNode(xNode)
+  }
+
+  private rotateLeft(x: RedBlackNode): void {
+    if (!x) return
+    const p = x.parent
+    const y = x.right
+    if (!y) return
+    const b = y.left
+
+    // update b
+    if (b) b.parent = x
+
+    // update x
+    x.parent = y
+    x.right = b
+
+    // update y
+    y.parent = p
+    y.left = x
+
+    // update p
+    if (p) {
+      // not rotate root
+      if (p.left === x) {
+        p.left = y
+      } else {
+        p.right = y
+      }
+    } else {
+      // rotate root
+      this.root = y
+    }
+  }
+
+  private rotateRight(y: RedBlackNode): void {
+    if (!y) return
+    const p = y.parent
+    const x = y.left
+    if (!x) return
+    const b = x.right
+
+    // update b
+    if (b) b.parent = y
+
+    // update y
+    y.parent = x
+    y.left = b
+
+    // update x
+    x.parent = p
+    x.right = y
+
+    // update p
+    if (p) {
+      // not rotate root
+      if (p.left === y) {
+        p.left = x
+      } else {
+        p.right = x
+      }
+    } else {
+      // rotate root
+      this.root = x
+    }
+  }
+
+  private deleteNode(node: RedBlackNode) {
+    if (!node) return
+    if (node.left && node.right) return
+
+    const child = node.left || node.right
+    const p = node.parent
+    if (p) {
+      if (p.left === node) {
+        p.left = child
+      } else {
+        p.right = child
+      }
+      if (child) {
+        child.parent = p
+      }
+    } else {
+      this.root = child
+      if (child) {
+        child.parent = null
+      }
+    }
+  }
+
+  // fix 2 consecutive red nodes (mainly)
+  private fixInsert(k: RedBlackNode) {
+    const p = k.parent
+    if (!p) {
+      // root node, make it black
+      k.color = 0
+      return
+    }
+
+    const isNodeLeft = p.left === k
+
+    if (!isRed(p)) {
+      // Case 2: nothing to do if parent is black
+      return
+    }
+
+    const g = p.parent
+    if (!g) return
+
+    const isParentLeft = g.left === p
+    const u = isParentLeft ? g.right : g.left
+
+    if (u && isRed(u)) {
+      p.color = 0
+      u.color = 0
+      g.color = 1
+      this.fixInsert(g)
+      return
+    }
+
+    // u is black
+
+    if (!isParentLeft) {
+      // p is right child
+      if (!isNodeLeft) {
+        // node is right child
+        this.rotateLeft(g)
+        p.color = 0
+        g.color = 1
+      } else {
+        // node is left child
+        this.rotateRight(p)
+        // repeat the above fix
+        this.fixInsert(p)
+      }
+    } else {
+      // p is left child
+      if (isNodeLeft) {
+        // node is left
+        this.rotateRight(g)
+        p.color = 0
+        g.color = 1
+      } else {
+        this.rotateLeft(p)
+        this.fixInsert(p)
+      }
+    }
+  }
+
+  // try to turn the node into red
+  private fixDelete(x: RedBlackNode) {
+    console.log('fix_Delete', x)
+    if (isRed(x)) {
+      return
+    }
+
+    // only 1 red child node
+    if (!x.left || !x.right) {
+      const child = x.left || x.right
+      if (child && isRed(child)) {
+        x.color = 1
+        child.color = 0
+        return
+      }
+    }
+
+    // x's children are black (possibly NULL)
+
+    const p = x.parent
+    // if x is root change color to red
+    // (to remove or swap again after recursive call)
+    if (!p) {
+      // TODO document this case
+      x.color = 1
+      return
+    }
+
+    const isNodeLeft = p.left === x
+    // sibling
+
+    if (isNodeLeft) {
+      const s = p.right
+      // this case not exist (break attribute 5)
+      if (!s) return
+
+      // s is black
+      if (!isRed(s)) {
+        if (s.right && isRed(s.right)) {
+          // 3.1, s.right is red
+          this.rotateLeft(p)
+          s.color = p.color
+          p.color = 0
+          s.right.color = 0
+          x.color = 1 // done
+        } else  if (s.left && isRed(s.left)) {
+          // 3.2, s.left is red
+          s.color = 1
+          s.left.color = 0
+          this.rotateRight(s)
+          // reduce to 3.1
+          this.fixDelete(x)
+        } else {
+          // 3.3, both s's children are black
+          if (isRed(p)) {
+            // 3.3.1
+            p.color = 0
+            s.color = 1
+            x.color = 1
+          } else {
+            // 3.3.2
+            // TODO check if P root do {...}
+            this.fixDelete(p)
+            // changed p into red, reduce to 3.3.1
+            this.fixDelete(x)
+          }
+        }
+      } else {
+        // 3.4
+        this.rotateLeft(p)
+        s.color = 0
+        p.color = 1
+        // reduce to 3.1, 3.2 or 3.3.1
+        this.fixDelete(x)
+      }
+    } else {
+      // mirror of above 3.* cases
+      const s = p.left
+      // this case not exist (break attribute 5)
+      if (!s) return
+      // s is black
+      if (!isRed(s)) {
+        if (s.left && isRed(s.left)) {
+          // mirror 3.1, s.left is red
+          this.rotateRight(p)
+          s.color = p.color
+          p.color = 0
+          s.left.color = 0
+          x.color = 1 // done
+        } else  if (s.right && isRed(s.right)) {
+          // mirror 3.2, s.right is red
+          this.rotateLeft(s)
+          s.color = 1
+          s.right.color = 0
+          // reduce to mirror 3.1
+          this.fixDelete(x)
+        } else {
+          // mirror 3.3, both s's children are black
+          if (isRed(p)) {
+            // mirror 3.3.1
+            p.color = 0
+            s.color = 1
+            x.color = 1
+          } else {
+            // mirror 3.3.2
+            this.fixDelete(p)
+            // changed p into red, reduce to mirror 3.3.1
+            this.fixDelete(x)
+          }
+        }
+      } else {
+        // mirror 3.4
+        this.rotateRight(p)
+        s.color = 0
+        p.color = 1
+        // reduce to mirror 3.1, 3.2 or 3.3.1
+        this.fixDelete(x)
+      }
+    }
+  }
+}
+
+function insertNode(node: RedBlackNode | null, value: number): RedBlackNode | null {
+  if (!node) {
+    return createNode(value)
+  }
+
+  // no insert duplicate value
+  if (node.value === value) return null
+
+  const isGoLeft = value < node.value
+  const next = isGoLeft ? node.left : node.right
+
+  const k = insertNode(next, value)
+  if (!k) return null
+
+  if (!next) {
+    // just created k
+    k.parent = node
+    if (isGoLeft) {
+      node.left = k
+    } else {
+      node.right = k
+    }
+  }
+
+  return k
+}
+
+function isRed(node: RedBlackNode | null): boolean {
+  return node ? node.color === 1 : false
+}
+
+function searchNode(node: RedBlackNode | null, value: number): RedBlackNode | null {
+  if (!node) return null
+  if (node.value === value) return node
+  if (value < node.value) {
+    return searchNode(node.left, value)
+  }
+
+  return searchNode(node.right, value)
+}
+
+function findMinNode(node: RedBlackNode): RedBlackNode {
+  let n = node
+  while (n.left) n = n.left
+
+  return n
+}
+```
 
 ## Minh họa
 
-Các bạn có thể thử tất cả các trường hợp trên bằng cách thêm hoặc xóa các phần tử tùy ý trên cây đỏ đen sau và kiểm chứng từng bước hoạt động in action.
+Các bạn có thể thử tất cả các trường hợp trên bằng cách thêm hoặc xóa các phần tử tùy ý trên cây đỏ đen sau và kiểm chứng từng bước hoạt động của thuật toán kèm lời giải thích.
 
 ```[rbtreevisual](size=40,height=320)
 31 30 23 50 45 48 70 67 75
+```
+
+Bài viết liên quan
+
+```[articlecards]()
+iHQRk7ODINxd2AZ4Dbcxa
 ```
