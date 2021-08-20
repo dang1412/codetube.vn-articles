@@ -57,8 +57,6 @@ linear(offsetY=70,id=2)
 
 Ta thấy sau khi kết thúc so sánh chuỗi mẫu ở vị trí đầu tiên của đoạn text, dịch chuyển sang vị trí thứ 2 ta so sánh lại từ đầu chuỗi mẫu. Trong khi ta đã biết 4 kí tự đầu của đoạn text chính là 4 kí tự đầu của chuỗi mẫu, ta tìm cách cải tiến thuật toán bằng cách tận dụng thông tin đã biết từ lần so sánh trước.
 
-sau khi dịch lên 1 vị trí ta biết 3 kí tự đầu sẽ khớp và chỉ cần 
-
 ## Cải tiến bằng thuật toán KMP
 
 Giả sử ta có chuỗi mẫu ABABAC và đã khớp được 5 kí tự đầu ở 1 vị trí trong đoạn text
