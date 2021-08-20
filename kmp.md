@@ -70,7 +70,7 @@ linear(offsetY=70,id=2)
  A{"c":"green"} B{"c":"green"} A{"c":"green"} B{"c":"green"} A{"c":"green"} C{"c":"red","t":"^"}
 ```
 
-Với thuật toán đơn sơ ta sẽ dịch chuỗi mẫu lên 1 vị trí và bắt đầu so sánh lại từ đầu từng kí tự. Tuy nhiên ta thấy giả sử sau khi đã khớp được 5 kí tự `A1 A2 A3 A4 A5`, để dịch lên 1 vị trí mà vẫn có khả năng khớp ta phải có `A1 A2 A3 A4` = `A2 A3 A4 A5`, hoặc để dịch lên 2 vị trí mà vẫn có khả năng khớp ta phải có `A1 A2 A3` = `A3 A4 A5`, với 5 kí tự này thuộc chuỗi mẫu đã biết trước.
+Với thuật toán đơn sơ ta sẽ dịch chuỗi mẫu lên 1 vị trí và bắt đầu so sánh lại từ đầu từng kí tự. Tuy nhiên ta thấy giả sử sau khi đã khớp được 5 kí tự `A1A2A3A4A5`, để dịch lên 1 vị trí mà vẫn có khả năng khớp ta phải có `A1A2A3A4` = `A2A3A4A5`, hoặc để dịch lên 2 vị trí mà vẫn có khả năng khớp ta phải có `A1A2A3` = `A3A4A5`, với 5 kí tự này thuộc chuỗi mẫu đã biết trước.
 
 ```[visual](offsetX=10,shape=rect,autoId=1,size=34)
 linear(offsetY=10)
@@ -89,20 +89,20 @@ linear(offsetY=70,id=2)
    A1{"c":"green","id":"1"} A2{"c":"green","id":"2"} A3{"c":"green","id":"3"} A4{"id":"4"} A5{"id":"5"} A6{"id":"6"}
 ```
 
-Trong trường hợp `A1 A2 A3` = `A3 A4 A5`, ta gọi chuỗi `A1 A2 A3` (hay `A3 A4 A5`) là prefix-suffix của `A1 A2 A3 A4 A5` tức là chuỗi `A1 A2 A3` vừa là tiền tố vừa là hậu tố của `A1 A2 A3 A4 A5`. Gọi độ dài đoạn tiền tố hậu tố này là x, nếu vị trí hiện tại trên đoạn text là K thì vị trí tiếp theo để thử khớp sẽ là `K + (5 - x)` (5 là độ dài của đoạn đã khớp ở bước hiện tại `A1 A2 A3 A4 A5`). Ta thấy cần x là dài nhất có thể vì nếu không ta sẽ bỏ qua vị trí có khả năng khớp tiếp theo, và `A1 A2 A3 A4 A5` chính là chuỗi tiền tố hậu tố của chính nó nhưng ta cần tìm chuỗi nhỏ hơn để có thể đi tiếp.
+Trong trường hợp `A1A2A3` = `A3A4A5`, ta gọi chuỗi `A1A2A3` (hay `A3A4A5`) là prefix-suffix của `A1A2A3A4A5` tức là chuỗi `A1A2A3` vừa là tiền tố vừa là hậu tố của `A1A2A3A4A5`. Gọi độ dài đoạn tiền tố hậu tố này là x, nếu vị trí hiện tại trên đoạn text là `Start` thì vị trí tiếp theo để thử khớp sẽ là `Start + (5 - x)` (5 là độ dài của đoạn đã khớp ở bước hiện tại `A1A2A3A4A5`). Ta thấy cần x là dài nhất có thể vì nếu không ta sẽ bỏ qua vị trí có khả năng khớp tiếp theo, và `A1A2A3A4A5` chính là chuỗi tiền tố hậu tố của chính nó nhưng ta cần tìm chuỗi nhỏ hơn để có thể đi tiếp.
 
-Như vậy sau khi khớp được `A1 A2 A3 A4 A5` trên đoạn text ta cần tìm chuỗi tiền tố hậu tố dài nhất (longest prefix suffix - LPS) không phải chính nó của `A1 A2 A3 A4 A5` để xác định vị trí tiếp theo có khả năng khớp trên đoạn text. Thêm nữa, sau khi biết được chuỗi tiền tố hậu tố dài nhất của đoạn đã khớp, ở lần khớp tiếp theo ta không cần bắt đầu lại từ vị trí đầu tiên của chuỗi mẫu mà tiếp tục ở vị trí kí tự tiếp theo chưa biết của đoạn text.
+Như vậy sau khi khớp được `A1A2A3A4A5` trên đoạn text ta cần tìm chuỗi tiền tố hậu tố dài nhất (longest prefix suffix - LPS) không phải chính nó của `A1A2A3A4A5` để xác định vị trí tiếp theo có khả năng khớp trên đoạn text. Thêm nữa, sau khi biết được chuỗi tiền tố hậu tố dài nhất của đoạn đã khớp, ở lần khớp tiếp theo ta không cần bắt đầu lại từ vị trí đầu tiên của chuỗi mẫu mà tiếp tục ở vị trí kí tự tiếp theo chưa biết của đoạn text.
 
-Ở ví dụ trên sau khi khớp được `ABABA`, đoạn này có 2 chuỗi tiền tố hậu tố không phải chính nó là `ABA` và `A`, ta chọn đoạn dài nhất `ABA` (độ dài 3) để tìm vị trí có khả năng khớp tiếp theo `K + (5 - 3)`
+Ở ví dụ trên sau khi khớp được `ABABA` (độ dài 5), đoạn này có 2 chuỗi tiền tố hậu tố không phải chính nó là `ABA` và `A`, ta chọn đoạn dài nhất `ABA` (độ dài 3) để tìm vị trí có khả năng khớp tiếp theo `Start + (5 - 3)`.
 
 ```[visual](offsetX=10,shape=rect,autoId=1,size=34)
 linear(offsetY=10)
-... A{"t":"K","c":"green"} B{"c":"green"} A{"c":"green"} B{"c":"green"} A{"c":"green"} ...
+... A{"t":"Start","c":"green"} B{"c":"green"} A{"c":"green"} B{"c":"green"} A{"c":"green"} ...
 linear(offsetY=70,id=2)
  A{"c":"green"} B{"c":"green"} A{"c":"green"} B{"c":"green"} A{"c":"green"} C{"c":"red","t":"^"}
 
 linear(offsetY=10)
-... A{"t":"K"} B A{"c":"green","t":"K+2"} B{"c":"green"} A{"c":"green"} ...
+... A{"t":"Start"} B A{"c":"green","t":"Start+2"} B{"c":"green"} A{"c":"green"} ...
 linear(offsetY=70,id=2)
    A{"c":"green","id":"1"} B{"c":"green","id":"2"} A{"c":"green","id":"3"} B{"id":"4"} A{"id":"5"} C{"id":"6"}
 ```
@@ -115,15 +115,15 @@ Ta có chuỗi mẫu độ dài m [P0P1...Pm-1]. Gọi LPS[i] là độ dài chu
 
 Giả sử đã tính được LPS[0], LPS[1]...LPS[i-1], ta tìm cách tính LPS[i].
 
-Gọi k = LPS[i] (k < i + 1 hay k <= i). Ta có tiền tố [P0P1...Pk-1] là hậu tố của [P0P1...Pi] suy ra `Pk-1 = Pi` và đoạn còn lại tiền tố [P0...Pk-2] là hậu tố của [P0...Pi-1]. Như vậy để tìm đoạn tiền tố hậu tố của [P0...Pi] ta cần tìm đoạn tiền tố hậu tố của [P0...Pi-1] dài nhất [P0...Pl] mà thỏa mãn kí tự tiếp theo `Pl+1 = Pi`, khi đó ta có LPS[i] = k = l + 1.
+Gọi k = LPS[i] (k < độ dài i + 1 hay k <= i). Ta có tiền tố [P0P1...Pk-1] là hậu tố của [P0P1...Pi] suy ra `Pk-1 = Pi` và đoạn còn lại tiền tố [P0...Pk-2] là hậu tố của [P0...Pi-1]. Như vậy để tìm đoạn tiền tố hậu tố của [P0...Pi] ta cần tìm đoạn tiền tố hậu tố của [P0...Pi-1] dài nhất [P0...Pl-1] mà thỏa mãn kí tự tiếp theo `Pl = Pi`, khi đó ta có LPS[i] = k = l + 1 (đoạn tiền tố hậu tố [P0...Pl] độ dài l + 1).
 
 Để tìm đoạn tiền tố hậu tố này của [P0...Pi-1], trước hết ta xét đoạn tiền tố hậu tố dài nhất (LPS[i-1]) của nó kiểm tra kí tự tiếp theo có bằng `Pi` ko, nếu có thì ta có kết quả nếu không ta tiếp tục xét đoạn tiền tố hậu tố dài thứ 2, rồi thứ 3...cho đến khi thỏa mãn kí tự tiếp theo hoặc trở về đoạn tiền tố hậu tố rỗng.
 
 Gọi đoạn tiền tố hậu tố dài nhất là PS1, dài thứ 2 là PS2, PS3,...Ta nhận thấy:
 
 - PS1 là tiền tố hậu tố dài nhất của [P0...Pi-1] (độ dài l1 = LPS[i-1]).
-- PS2 là tiền tố hậu tố dài nhất của PS1 (độ dài l2 = LPS[l1]).
-- PS3 là tiền tố hậu tố dài nhất của PS2 (độ dài l3 = LPS[l2]).
+- PS2 là tiền tố hậu tố dài nhất của PS1 (độ dài l2 = LPS[l1-1]).
+- PS3 là tiền tố hậu tố dài nhất của PS2 (độ dài l3 = LPS[l2-1]).
 - ...
 
 ```ts
@@ -133,11 +133,11 @@ function longestPrefixSuffix(p: string): number[] {
     // find prefix-suffix of p0..pi-1
     // start with the longest
     let k = lps[i-1]
-    // stop at empty prefix-suffix or the next character is p[i]
-    while (k > 0 && p[k+1] !== p[i]) k = lps[k]
+    // find the prefix-suffix with the next character is p[i] or stop at empty one
+    while (k > 0 && p[k] !== p[i]) k = lps[k-1]
 
     // got the prefix-suffix length k
-    if (p[k+1] === p[i]) lps[i] = k + 1
+    if (p[k] === p[i]) lps[i] = k + 1
     else lps[i] = 0
   }
 
@@ -153,11 +153,12 @@ Sau khi tính được mảng LPS cho tất cả các tiền tố của P, ta á
 - Vòng lặp bắt đầu với điều kiện tiếp tục `start <= n - m`
 - Ta tiếp tục khớp từng kí tự trên đoạn text với chuỗi mẫu và tăng k cho đến khi gặp kí tự sai khác hoặc khớp hoàn toàn.
 - Nếu đã khớp hoàn toàn lưu lại kết quả.
-- Nếu chưa tiếp tục tính `start` và `k` cho vòng lặp kế tiếp dùng mảng LPS:
+- Tiếp tục tính `start` và `k` cho vòng lặp kế tiếp dùng mảng LPS:
   - Nếu k > 0
     - `start = start + (k - lps[k-1])`
     - `k = lps[k-1]`
   - Nếu k = 0 (không khớp được kí tự nào): `start = start + 1`
+- Lặp lại vòng lặp.
 
 ```ts
 function kmp(p: string, t: string): number[] {
@@ -189,3 +190,8 @@ function kmp(p: string, t: string): number[] {
 ```
 
 ## Minh họa
+
+```[kmpvisual](size=30,height=250,shape=rect,offsetX=34,spacing=3)
+pattern=abcabcaba
+text=aabcabcabcababcaabcabcabc
+```
