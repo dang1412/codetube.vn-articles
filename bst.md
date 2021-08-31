@@ -1,7 +1,5 @@
 # Cây nhị phân tìm kiếm (Binary Search Tree)
 
-## Giới thiệu cây nhị phân (Binary Tree)
-
 Cấu trúc dữ liệu cây (tree) bao gồm 1 nút gốc (root) và các nút con (children), các nút con lại bao gồm nút con khác của nó, tạo thành cấu trúc dữ liệu dạng phân cấp (hierachy) bắt đầu từ gốc và phình ra ở dưới (bottom).
 
 Cây nhị phân là cấu trúc dữ liệu dạng cây trong đó mỗi nút có tối đa 2 nút con, đây là cấu trúc dữ liệu phổ biến và rất hữu dụng trong khoa học máy tính. Ví dụ cây nhị phân có 8 nút được biểu diễn như hình sau:
@@ -359,14 +357,6 @@ Ví dụ trường hợp 3, xóa nút gốc **36** trong cây nhị phân tìm k
 (67){"p":"70"}(75){"p":"70"}
 ```
 
-## Minh hoạ trực quan
-
-Các bạn nhập input cho các thao tác Insert, Delete để xem cách thuật toán hoạt động theo từng bước
-
-```[bstvisual](size=32,height=250)
-31 30 23 50 45 48 70 67 75
-```
-
 ## Mã nguồn
 
 Typescript
@@ -504,4 +494,12 @@ export class BinaryTree {
     this.root = this.root.delete(data)
   }
 }
+```
+
+## Minh hoạ trực quan
+
+Các bạn nhập input cho các thao tác Insert, Delete để xem cách thuật toán hoạt động theo từng bước.
+
+```[bstvisual](size=32,height=250)
+31 30 23 50 45 48 70 67 75
 ```

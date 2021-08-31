@@ -216,14 +216,17 @@ Trường hợp này nút con trái của `S`, nút cha `P` có thể là đen h
 Minh họa, với màu hồng nghĩa là màu đỏ hoặc đen đều được:
 
 ```[tree](size=40)
+(..)
 (B){"t":"P","c":"pink"}
 (A){"c":"black","t":"x"}(D){"c":"black","t":"S"}
 (C){"p":"D","c":"pink"}(E){"p":"D","c":"red"}
 
+(..)
 (D){"c":"black","t":"S"}
 (B){"t":"P","c":"pink"}(E){"c":"red"}
 (A){"c":"black","t":"x"}(C){"c":"pink"}
 
+(..)
 (D){"c":"pink","t":"S"}
 (B){"t":"P","c":"black"}(E){"c":"black"}
 (A){"c":"red","t":"x"}(C){"c":"pink"}
@@ -234,6 +237,7 @@ Trên hình minh họa ta nhận thấy nếu trạng thái 1 được đảm b�
 Trạng thái 1:
 
 ```[tree](size=40)
+(..)
 (B){"t":"P","c":"pink"}
 (A){"c":"black","t":"x"}(D){"c":"black","t":"S"}
 (C){"p":"D","c":"pink"}(E){"p":"D","c":"red"}
@@ -242,6 +246,7 @@ Trạng thái 1:
 Trạng thái 3:
 
 ```[tree](size=40)
+(..)
 (D){"c":"pink","t":"S"}
 (B){"t":"P","c":"black"}(E){"c":"black"}
 (A){"c":"red","t":"x"}(C){"c":"pink"}
@@ -269,18 +274,22 @@ Ta chỉ xét trường hợp nút con phải của `S` là đen (hoặc NULL), 
 - Ta có cây trở về trường hợp 3.1 với con trái `S` (lúc chưa xoay) đóng vai trò là nút `S` mới, thực hiện tiếp các bước giống như ở 3.1.
 
 ```[tree](size=40)
+(..)
 (B){"c":"pink","t":"P"}
 (A){"c":"black","t":"x"}(D){"c":"black","t":"S"}
 (C){"c":"red","p":"D"}(E){"p":"D","c":"black"}
 
+(..)
 (B){"c":"pink","t":"P"}
 (A){"c":"black","t":"x"}(C){"c":"black","t":"new S"}
 (F){"p":"C","c":"pink","t":"C's left child"}(D){"c":"red","t":"S","p":"C"}
 
+(..)
 (C){"c":"black","t":"new S"}
 (B){"c":"pink","t":"P"}(D){"c":"red","t":"S"}
 (A){"c":"black","t":"x"}(F){"c":"pink"}
 
+(..)
 (C){"c":"pink","t":"new S"}
 (B){"c":"black","t":"P"}(D){"c":"black","t":"S"}
 (A){"c":"red","t":"x"}(F){"c":"pink"}
@@ -311,6 +320,20 @@ Trường hợp này nhánh cây con đang xét toàn là đen ta gọi đệ qu
 - Lặp lại từ đầu case 3 với nhiệm vụ đổi màu nút cha `P` sang đỏ (`P` đóng vai trò là nút `x` mới).
 - Với nút cha `P` đỏ, tiếp tục thực hiện các bước như ở 3.3.1.
 
+```[tree](size=40)
+(B){"c":"black","t":"P"}
+(A){"c":"black","t":"x"}(D){"c":"black","t":"S"}
+(C){"c":"black","p":"D"}(E){"c":"black","p":"D"}
+
+(B){"c":"red","t":"P"}
+(A){"c":"black","t":"x"}(D){"c":"black","t":"S"}
+(C){"c":"black","p":"D"}(E){"c":"black","p":"D"}
+
+(B){"c":"black","t":"P"}
+(A){"c":"red","t":"x"}(D){"c":"red","t":"S"}
+(C){"c":"black","p":"D"}(E){"c":"black","p":"D"}
+```
+
 **Case 3.4** `S` là nút màu đỏ
 
 Lúc này cả 2 con của `S` là màu đen (theo tính chất 4)
@@ -320,14 +343,17 @@ Lúc này cả 2 con của `S` là màu đen (theo tính chất 4)
 - Lúc này bài toán trở về 3.1, 3.2 hoặc 3.3.1 (`x` màu đen, nút cha `P` màu đỏ và `S` mới màu đen).
 
 ```[tree](size=40)
+(..)
 (B){"c":"black","t":"P"}
 (A){"c":"black","t":"x"}(D){"c":"red","t":"S"}
 (C){"c":"black","p":"D"}(E){"c":"black","p":"D"}
 
+(..)
 (D){"c":"red","t":"S"}
 (B){"c":"black","t":"P"}(E){"c":"black"}
 (A){"c":"black","t":"x"}(C){"c":"black"}
 
+(..)
 (D){"c":"black","t":"S"}
 (B){"c":"red","t":"P"}(E){"c":"black"}
 (A){"c":"black","t":"x"}(C){"c":"black","t":"new S"}
