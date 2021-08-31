@@ -13,7 +13,7 @@ Dùng 2 vòng lặp
 - Thử lần lượt từng vị trí trên T (n - m + 1 vị trí [0...n - m])
 - Với từng vị trí trên T, thử khớp P bắt đầu từ vị trí này (m kí tự), cho đến khi khớp hoàn toàn hoặc gặp kí tự sai khác.
 
-```[visual](offsetX=10,shape=rect,autoId=1,size=34)
+```[visual](offsetX=10,shape=rect,autoId=1,size=34,height=120,panX=1,spacing=5)
 linear(offsetY=10)
 A{"t":"start"} A A A A A A A A A
 linear(offsetY=70,id=2)
@@ -42,7 +42,7 @@ A{"c":"green"} A{"c":"green"} A{"c":"green"} A{"c":"green","t":"^"} B
 linear(offsetY=10)
 A{"t":"start","c":"green"} A{"c":"green"} A{"c":"green"} A{"c":"green"} A{"c":"red"} A A A A A
 linear(offsetY=70,id=2)
-A{"c":"green"} A{"c":"green"} A{"c":"green"} A{"c":"green"} B{"c":"red","t":"^"}
+A{"c":"green"} A{"c":"green"} A{"c":"green"} A{"c":"green"} B{"t":"^"}
 
 linear(offsetY=10)
 A A{"t":"start"} A A A A A A A A
@@ -53,15 +53,32 @@ linear(offsetY=10)
 A A{"t":"start","c":"green"} A A A A A A A A
 linear(offsetY=70,id=2)
  A{"id":"0","c":"green"} A{"id":"1"} A{"id":"2"} A{"id":"3"} B{"id":"4"}
+
+linear(offsetY=10)
+A A{"t":"start","c":"green"} A{"c":"green"} A A A A A A A
+linear(offsetY=70,id=2)
+ A{"id":"0","c":"green"} A{"c":"green","id":"1"} A{"id":"2"} A{"id":"3"} B{"id":"4"}
+
+linear(offsetY=10)
+A A{"t":"start","c":"green"} A{"c":"green"} A{"c":"green"} A A A A A A
+linear(offsetY=70,id=2)
+ A{"id":"0","c":"green"} A{"c":"green","id":"1"} A{"c":"green","id":"2"} A{"id":"3"} B{"id":"4"}
+
+linear(offsetY=10)
+A A{"t":"start","c":"green"} A{"c":"green"} A{"c":"green"} A{"c":"green"} A A A A A
+linear(offsetY=70,id=2)
+ A{"id":"0","c":"green"} A{"c":"green","id":"1"} A{"c":"green","id":"2"} A{"c":"green","id":"3"} B{"id":"4"}
 ```
 
-Ta thấy sau khi kết thúc so sánh chuỗi mẫu ở vị trí đầu tiên của đoạn text, dịch chuyển sang vị trí thứ 2 ta so sánh lại từ đầu chuỗi mẫu. Trong khi ta đã biết 4 kí tự đầu của đoạn text chính là 4 kí tự đầu của chuỗi mẫu, ta tìm cách cải tiến thuật toán bằng cách tận dụng thông tin đã biết từ lần so sánh trước.
+Ta thấy sau khi kết thúc so sánh chuỗi mẫu ở vị trí đầu tiên của đoạn text, dịch chuyển sang vị trí thứ 2 ta so sánh lại từ đầu chuỗi mẫu. Ở lần so sánh thứ 2 ta đã biết 4 kí tự đầu của đoạn text chính là 4 kí tự đầu của chuỗi mẫu, ta tìm cách cải tiến thuật toán bằng cách tận dụng thông tin đã biết từ lần so sánh trước.
 
 ## Cải tiến bằng thuật toán KMP
 
+Thuật toán KMP cải tiến giải pháp đơn thuần bằng việc tiền xử lý xâu mẫu và sử dụng thông tin đã có trước để đẩy nhanh xử lý việc tìm kiếm xâu mẫu bên trong chuỗi lớn.
+
 Giả sử ta có chuỗi mẫu ABABAC và đã khớp được 5 kí tự đầu ở 1 vị trí trong đoạn text
 
-```[visual](offsetX=10,shape=rect,autoId=1,size=34)
+```[visual](offsetX=10,shape=rect,autoId=1,size=34,height=120,panX=1)
 linear(offsetY=10)
 ... A{"t":"start","c":"green"} B{"c":"green"} A{"c":"green"} B{"c":"green"} A{"c":"green"} ...
 linear(offsetY=70,id=2)
@@ -70,7 +87,7 @@ linear(offsetY=70,id=2)
 
 Với thuật toán đơn sơ ta sẽ dịch chuỗi mẫu lên 1 vị trí và bắt đầu so sánh lại từ đầu từng kí tự. Tuy nhiên ta thấy giả sử sau khi đã khớp được 5 kí tự `A1A2A3A4A5`, để dịch lên 1 vị trí mà vẫn có khả năng khớp ta phải có `A1A2A3A4` = `A2A3A4A5`, hoặc để dịch lên 2 vị trí mà vẫn có khả năng khớp ta phải có `A1A2A3` = `A3A4A5`, với 5 kí tự này thuộc chuỗi mẫu đã biết trước.
 
-```[visual](offsetX=10,shape=rect,autoId=1,size=34)
+```[visual](offsetX=10,shape=rect,autoId=1,size=34,height=120,panX=1)
 linear(offsetY=10)
 ... A1{"t":"start","c":"green"} A2{"c":"green"} A3{"c":"green"} A4{"c":"green"} A5{"c":"green"} ...
 linear(offsetY=70,id=2)
@@ -93,7 +110,7 @@ Như vậy sau khi khớp được `A1A2A3A4A5` trên đoạn text ta cần tìm
 
 Ở ví dụ trên sau khi khớp được `ABABA` (độ dài 5), đoạn này có 2 chuỗi tiền tố hậu tố không phải chính nó là `ABA` và `A`, ta chọn đoạn dài nhất `ABA` (độ dài 3) để tìm vị trí có khả năng khớp tiếp theo `Start + (5 - 3)`.
 
-```[visual](offsetX=10,shape=rect,autoId=1,size=34)
+```[visual](offsetX=10,shape=rect,autoId=1,size=34,height=120,panX=1)
 linear(offsetY=10)
 ... A{"t":"Start","c":"green"} B{"c":"green"} A{"c":"green"} B{"c":"green"} A{"c":"green"} ...
 linear(offsetY=70,id=2)
@@ -175,10 +192,14 @@ function kmp(p: string, t: string): number[] {
     if (k === m) {
       rs.push(start)
     }
+    // matched k characters
     if (k > 0) {
+      // move the prefix to suffix position
       start += k - lps[k-1]
+      // we know these characters already matched
       k = lps[k-1]
     } else {
+      // just move forward 1
       start++
     }
   }
