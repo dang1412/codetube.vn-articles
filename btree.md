@@ -1,29 +1,34 @@
 # BTree
 
-B-Tree là cây tìm kiếm tự cân bằng và là dạng tổng quát của cây nhị phân tìm kiếm trong đó 1 node có thể có nhiều hơn 1 phần tử. Không như các cây tìm kiếm tự cân bằng khác như AVL tree hay Redblack tree được sử dụng chủ yếu trong bộ nhớ RAM, BTree được sinh ra do nhu cầu lưu trữ và tìm kiếm dữ liệu trên bộ nhớ cứng (hard disk). Với bộ nhớ cứng chi phí 1 lần truy cập dữ liệu là rất lớn và mỗi lần truy cập dữ liệu sẽ được đọc lên theo block nhiều dữ liệu 1 lần nên Btree giúp giải quyết 2 vấn đề:
+B-Tree là cây tìm kiếm tự cân bằng và là dạng tổng quát của cây nhị phân tìm kiếm trong đó 1 node có thể có nhiều hơn 1 phần tử. Không như các cây tìm kiếm tự cân bằng khác như AVL tree hay Redblack tree được sử dụng chủ yếu trong bộ nhớ RAM, BTree được sinh ra do nhu cầu lưu trữ và tìm kiếm dữ liệu trên bộ nhớ cứng (hard disk). Với bộ nhớ cứng chi phí 1 lần truy cập dữ liệu là rất lớn và mỗi lần truy cập dữ liệu sẽ được đọc lên theo block nhiều bản ghi (1 bản ghi tương ứng 1 phần tử của nút) 1 lần nên Btree giúp giải quyết 2 vấn đề:
 
 - Mỗi node có nhiều phần tử phù hợp với việc đọc dữ liệu trên đĩa cứng 1 lần theo block chứa nhiều bản ghi dữ liệu.
 - Vì mỗi node có nhiều phần tử nên độ cao của cây giảm khiến cho số lần truy cập đĩa cứng khi thao tác cũng giảm.
 
+Btree được tạo ra chủ yếu với mục đích để lưu trữ và tìm kiếm dữ liệu trên đĩa cứng (ví dụ *index* của database trên đĩa cứng là Btree). Tuy nhiên để đơn giản trong phạm vi bài viết này chúng ta chỉ **tập trung vào logic của Btree** được cài đặt trên bộ nhớ trong (RAM), nghĩa là các phần tử được lưu bằng biến số thay vì phải xử lý các bản ghi, con trỏ trên đĩa cứng đòi hỏi những kiến thức sâu hơn về cách ổ đĩa cứng lưu trữ và hoạt động.
+
+Btree có nhiều biến thể trong đó phổ biến nhất là B+tree (Bplustree) tức là tất cả dữ liệu nằm ở nút lá, các nút phía trên chỉ đóng vai trò chứa khóa tìm kiếm để dẫn đến nút lá chứa dữ liệu mong muốn. Trong phạm vi bài viết này chúng ta sẽ nói về Btree cơ bản tức là nút lá và nút giữa đều chứa các phần tử có vai trò giống nhau.
+
 ## Tính chất Btree
 
-- Tất cả nút lá ở cùng độ sâu.
-- Với các nút không phải là lá (internal node), gọi bậc(**degree**) `d` của nút là số con của nút đó, thì `k = d - 1` là số khóa (key) của nút đó.
-- Gọi **order** (maximum degree) của cây là `2t`, ta có `t <= d <= 2t`.
-- Số khóa `k` nhỏ nhất của mọi nút không phải gốc là `t - 1`, với nút gốc số khóa `k >= 0`.
-- Số khóa `k` lớn nhất của mọi nút kể cả gốc là `2t - 1`.
-- Tất cả khóa của 1 nút được sắp xếp tăng dần, cây con nằm giữa 2 khóa `k1` và `k2` chứa tất cả các khóa nằm trong khoảng `k1 -> k2`.**
+Mỗi Btree phụ thuộc vào 1 giá trị ORDER là giá trị để xác định số lượng phần tử có trong 1 nút. Btree hợp lệ bảo đảm những tính chất sau:
 
-Btree với **order** 4 (số nút con lớn nhất `2t` là 4, số khóa lớn nhất 3, nhỏ nhất là 1) có dạng như sau.
+- Số lượng nút con (cây con) của 1 nút không phải lá luôn nhiều hơn số phần tử của nút đó 1 đơn vị.
+- Nút gốc có thể có ít nhất 1 (hoặc thậm chí là 0) phần tử. Các nút ngoài nút gốc có tối thiểu `MIN = ORDER / 2 - 1` phần tử (hay tối thiểu `ORDER / 2` nút con).
+- Các nút có số phần tử tối đa `MAX = ORDER - 1` (hay tối đa `ORDER` nút con).
+- Tất cả nút lá ở cùng độ sâu.
+- Tất cả các phần tử (hay khóa tìm kiếm) của 1 nút được sắp xếp tăng dần, cây con nằm giữa 2 phần tử `k1` và `k2` chứa tất cả các phần tử nằm trong khoảng `k1 -> k2`.
+
+Btree với **ORDER** 5 (số nút con lớn nhất là 5, số phần tử nhiều nhất 4, ít nhất là 2) có dạng như sau.
 
 ```[tree](shape=rect,size=30,height=200)
 (3)
 (1,2)(4,5,6,8)
 ```
 
-Trên hình ta có khóa là các phần tử nằm trong hình vuông, số con là số đường link đi ra từ nút.
+Trên hình ta có khóa là các phần tử nằm trong hình vuông, số cây con (subtree) tương ứng với số đường link đi ra từ nút.
 
-Độ phức tạp tính toán các thao tác Btree.
+Độ phức tạp tính toán các thao tác `search, insert, delete` của Btree là O(logn) (cơ số logarit phụ thuộc vào giá trị ORDER).
 
 ## Cài đặt
 
@@ -31,25 +36,26 @@ Sử dụng 2 class cho nút **BTreeNode** và cho cây **Btree**, cấu trúc c
 
 ```ts
 export class BTreeNode {
-    values: number[] = []
-    children: BTreeNode[] = []
+  values: number[] = []
+  children: BTreeNode[] = []
 
-    // thêm
-    insert(value: number): [number, BTreeNode] | null
+  // thêm
+  insert(value: number): [number, BTreeNode] | null
 
-    // xóa
-    delete(value: number | null, replace?: [BTreeNode, number]): number
+  // xóa
+  delete(value: number | null): number
 }
 
 export class BTree {
-    root: BTreeNode | null = null
+  root: BTreeNode | null = null
+  order: number
 
-    insert(value: number) {
-        this.root.insert(value)
-    }
-    delete(value: number) {
-        this.root.delete(value)
-    }
+  insert(value: number) {
+    this.root.insert(value)
+  }
+  delete(value: number) {
+    this.root.delete(value)
+  }
 }
 ```
 
@@ -68,7 +74,7 @@ export class BTree {
 
 5. Trong trường hợp nút gốc bị chia, do không tồn tại nút cha ta tạo 1 nút mới bao gồm 1 phần tử chia và 2 con là nút gốc hiện tại và nút mới chia từ nút gốc. Sau đó cập nhật nút gốc là nút mới này.
 
-Với **order** 5 ta có
+Ta lấy **ORDER = 5** cho các ví dụ xuyên suốt bài viết.
 
 - Số phần tử nhỏ nhất: 2
 - Số phần tử lớn nhất: 4
@@ -108,6 +114,7 @@ Với **order** 5 ta có
   - Chia tách nút hiện tại nếu cần và trả về kết quả.
 
 ```ts
+export class BTreeNode {
   // ...
   // insert and fix
   insert(value: number, max: number): [number, BTreeNode] | null {
@@ -136,7 +143,14 @@ Với **order** 5 ta có
     // kiểm tra nếu số phần tử vượt quá max thì cần chia tách
     return this.splitIfNeeded(max)
   }
+
+  private splitIfNeeded(): [number, BTreeNode] | null {
+    // kiểm tra số phần tử có vượt quá số tối đa không
+    // nếu có chia tách nút, trả về phần tử chia và nút mới
+    // nếu không trả về null
+  }
   // ...
+}
 ```
 
 **2.** Hàm insert của cây
@@ -151,13 +165,13 @@ Với **order** 5 ta có
 export class BTree {
   root: BTreeNode | null = null
 
-  constructor(public minOrder: number) {}
+  constructor(public order: number) {}
 
   insert(value: number) {
     if (!this.root) {
       this.root = new BTreeNode()
     }
-    const rs = this.root.insert(value, this.minOrder * 2 - 1)
+    const rs = this.root.insert(value, this.order - 1)
     if (rs) {
       const children = [this.root, rs[1]]
       this.root = new BTreeNode([rs[0]])
@@ -188,10 +202,10 @@ export class BTree {
 
 (H)
 (A,E{"c":"orange"})(I,J)
-(...)(B,C,D)(F)(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
+(...)(B,C,D{"c":"orange"})(F)(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
 
 (H)
-(A,D)(I,J)
+(A,D{"c":"orange"})(I,J)
 (...)(B,C)(E{"c":"orange"},F)(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
 ```
 
@@ -204,10 +218,10 @@ export class BTree {
 
 (H)
 (A,D{"c":"orange"})(I,J)
-(...)(B)(E,F,G{"t":"anh em phải"})(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
+(...)(B)(E{"c":"orange"},F,G{"t":"anh em phải"})(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
 
 (H)
-(A,E)(I,J)
+(A,E{"c":"orange"})(I,J)
 (...)(B,D{"c":"orange"})(F,G)(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
 ```
 
@@ -283,7 +297,319 @@ Trường hợp merge node tiếp tục xảy ra ở nút cha (không phải lá
 (...)(B,C,D,E)(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}
 ```
 
+### Cài đặt Delete
+
+**1.** Hàm delete của nút
+
+- Bắt đầu từ gốc tìm vị trí nhánh cây phù hợp với phần tử muốn xóa.
+- Nếu là nút lá:
+  - Nếu tìm thấy, xóa phần tử và trả về phần tử này.
+  - Nếu không tìm thấy trả về `null`
+- Nếu là nút giữa:
+  - Nếu chưa tìm thấy, gọi đệ qui xóa đối với nút con ở vị trí tìm được.
+  - Nếu tìm thấy:
+    - Gọi đệ qui xóa phần tử lớn nhất (phần tử thay thế) đối với nút con tương ứng.
+    - Ghi đè phần tử thay thế vào vị trí phần tử muốn xóa.
+  - Sau khi gọi xóa đối với nút con, kiểm tra số phần tử của nút con này nếu nhỏ hơn số tối thiểu cho phép ta thực hiện tái cân bằng cây: xoay trái, xoay phải hoặc hợp nhất nút. Trong trường hợp hợp nhất nút số phần tử của nút cha (nút hiện tại) sẽ giảm đi 1, như vậy sau khi rút đệ qui lên trên ta tiếp tục kiểm tra và tái cân bằng cây nếu cần.
+
+```ts
+export class BtreeNode {
+  // ...
+  delete(value: number, min: number): number | null {
+    const [pos, found] = this.findPosition(value)
+    let out: number | null = null
+
+    // leaf node
+    if (this.isleaf()) {
+      if (found) {
+        // remove
+        out = this.values.splice(pos, 1)[0]
+      }
+    } else {
+      // internal node
+      const child = this.children[pos]
+
+      if (found) {
+        // delete the max value of the child
+        const out = child.deleteMax(min, onChange)
+        if (out) {
+          // replace the found position with the deleted value
+          this.values[pos] = out
+        }
+      } else {
+        out = child.delete(value, min, onChange)
+      }
+
+      // after delete, grow child if needed
+      if (child.values.length < min) {
+        this.growChild(pos, min)
+        // incase empty root, we skip this change
+        if (this.values.length) onChange()
+      }
+    }
+
+    return out
+  }
+
+  private deleteMax(min: number): number | null {
+    let out: number | null = null
+    if (this.isleaf()) {
+      out = this.values.pop() || null
+    } else {
+      const pos = this.values.length
+      const child = this.children[pos]
+      out = child.deleteMax(min, onChange)
+  
+      if (child.values.length < min) {
+        this.growChild(pos, min)
+      }
+    }
+
+    return out
+  }
+
+  private growChild(i: number, min: number) {
+    // đối với nút con child = this.children[i],
+    // xoay trái
+    // xoay phải
+    // merge node
+  }
+  // ...
+}
+```
+
+**2.** Hàm delete của cây
+
+- Gọi hàm xóa đối với nút gốc (nếu tồn tại).
+- Trong trường hợp số phần tử của nút gốc trở về 0 (số con là 1) loại bo nút gốc này và cập nhật nút gốc mới là nút con của nó.
+
+```ts
+export class BTree {
+  root: BTreeNode | null = null
+
+  constructor(public order: number) {}
+
+  delete(value: number) {
+    if (!this.root) {
+      return
+    }
+
+    this.root.delete(value, Math.ceil(this.order / 2) - 1, this.onChange)
+
+    // update new root
+    if (this.root.values.length === 0) {
+      this.root = this.root.children[0] || null
+    }
+  }
+}
+```
+
 ## Mã nguồn
+
+Full Typescript source
+
+```ts
+export class BTreeNode {
+  children: BTreeNode[] = []
+  next: BTreeNode | null = null
+
+  constructor(public values: number[] = []) {}
+
+  isleaf(): Boolean {
+    return this.children.length === 0
+  }
+
+  search(value: number): [BTreeNode, number] | null {
+    return null
+  }
+
+  // insert and fix
+  insert(value: number, max: number): [number, BTreeNode] | null {
+    const [pos, found] = this.findPosition(value)
+
+    // no duplicate
+    if (found) {
+      return null
+    }
+
+    if (this.isleaf()) {
+      this.values.splice(pos, 0, value)
+    } else {
+      const rs = this.children[pos].insert(value, max)
+      if (rs) {
+        this.values.splice(pos, 0, rs[0])
+        this.children.splice(pos + 1, 0, rs[1])
+      }
+    }
+
+    return this.splitIfNeeded(max)
+  }
+
+  private split(i: number): [number, BTreeNode] {
+    // new right node
+    const right = new BTreeNode()
+    right.values = this.values.splice(i + 1)
+    // remove the upper item
+    const item = this.values.pop()!
+
+    if (!this.isleaf()) {
+      right.children = this.children.splice(i + 1)
+    }
+
+    right.next = this.next
+    this.next = right
+
+    return [item, right]
+  }
+
+  private splitIfNeeded(max: number): [number, BTreeNode] | null {
+    if (this.values.length <= max) {
+      return null
+    }
+
+    return this.split(Math.floor(max / 2))
+  }
+
+  // delete
+  delete(value: number, min: number, onChange = () => {}): number | null {
+    const [pos, found] = this.findPosition(value)
+    let out: number | null = null
+
+    // leaf node
+    if (this.isleaf()) {
+      if (found) {
+        // remove
+        out = this.values.splice(pos, 1)[0]
+        onChange()
+      }
+    } else {
+      // internal node
+      const child = this.children[pos]
+
+      if (found) {
+        // delete the max value of the child
+        const out = child.deleteMax(min, onChange)
+        if (out) {
+          // replace the found position with the deleted value
+          this.values[pos] = out
+          onChange()
+        }
+      } else {
+        out = child.delete(value, min, onChange)
+      }
+
+      // after delete, grow child if needed
+      if (child.values.length < min) {
+        this.growChild(pos, min)
+        // incase empty root, we skip this change
+        if (this.values.length) onChange()
+      }
+    }
+
+    return out
+  }
+
+  // delete last value of the right-most child
+  private deleteMax(min: number, onChange = () => {}): number | null {
+    let out: number | null = null
+    if (this.isleaf()) {
+      out = this.values.pop() || null
+      onChange()
+    } else {
+      const pos = this.values.length
+      const child = this.children[pos]
+      out = child.deleteMax(min, onChange)
+  
+      if (child.values.length < min) {
+        this.growChild(pos, min)
+        onChange()
+      }
+    }
+
+    return out
+  }
+
+  private growChild(i: number, min: number) {
+    if (i > 0 && this.children[i-1].values.length > min) {
+      // steal from left child
+      const child = this.children[i]
+      const stealFrom = this.children[i-1]
+      const stolenItem = stealFrom.values.pop()!
+
+      // push upper item to the child's head
+      child.values.splice(0, 0, this.values[i-1])
+      // move stolenItem up
+      this.values[i-1] = stolenItem
+      if (!child.isleaf()) {
+        // move last child of stealFrom to child's head
+        child.children.splice(0, 0, stealFrom.children.pop()!)
+      }
+    } else if (i < this.values.length && this.children[i+1].values.length > min) {
+      // steal from right child
+      const child = this.children[i]
+      const stealFrom = this.children[i+1]
+      const stolenItem = stealFrom.values.shift()!
+
+      child.values.push(this.values[i])
+      if (!child.isleaf()) {
+        child.children.push(stealFrom.children.shift()!)
+      }
+      this.values[i] = stolenItem
+    } else {
+      // merge with right child
+      if (i >= this.values.length) {
+        i--
+      }
+
+      const child = this.children[i]
+      const mergeItem = this.values.splice(i, 1)[0]
+      const mergeChild = this.children.splice(i + 1, 1)[0]
+      child.children.push(...mergeChild.children)
+      child.values.push(mergeItem, ...mergeChild.values)
+      child.next = mergeChild.next
+      // TODO free node mergeChild?
+    }
+  }
+
+  private findPosition(value: number): [number, boolean] {
+    let i = 0
+    for (; i < this.values.length && value > this.values[i]; i++) {}
+
+    return [i, value === this.values[i]]
+  }
+}
+
+export class BTree {
+  root: BTreeNode | null = null
+
+  constructor(public order: number) {}
+
+  insert(value: number) {
+    if (!this.root) {
+      this.root = new BTreeNode()
+    }
+    const rs = this.root.insert(value, this.order - 1)
+    if (rs) {
+      const children = [this.root, rs[1]]
+      this.root = new BTreeNode([rs[0]])
+      this.root.children = children
+    }
+  }
+
+  delete(value: number) {
+    if (!this.root) {
+      return
+    }
+
+    const out = this.root.delete(value, Math.ceil(this.order / 2) - 1)
+
+    // update new root
+    if (this.root.values.length === 0) {
+      this.root = this.root.children[0] || null
+    }
+  }
+}
+```
 
 ## Minh họa
 
