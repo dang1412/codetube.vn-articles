@@ -242,7 +242,7 @@ Trường hợp xoay trái tiếp tục thực hiện ở nút cha (không phả
 (A)(H{"c":"orange"},I,J)
 (...)(B,D,E,F{"t":"merged node"})(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}(...){"id":"l4"}
 
-(H)
+(H){"c":"orange"}
 (A,G{"c":"orange"})(I,J)
 (...)(B,D,E,F{"t":"merged node"})(...){"id":"l1"}(...){"id":"l2"}(...){"id":"l3"}(...){"id":"l4"}
 ```
@@ -331,20 +331,18 @@ export class BtreeNode {
 
       if (found) {
         // delete the max value of the child
-        const out = child.deleteMax(min, onChange)
+        const out = child.deleteMax(min)
         if (out) {
           // replace the found position with the deleted value
           this.values[pos] = out
         }
       } else {
-        out = child.delete(value, min, onChange)
+        out = child.delete(value, min)
       }
 
       // after delete, grow child if needed
       if (child.values.length < min) {
         this.growChild(pos, min)
-        // incase empty root, we skip this change
-        if (this.values.length) onChange()
       }
     }
 
@@ -358,7 +356,7 @@ export class BtreeNode {
     } else {
       const pos = this.values.length
       const child = this.children[pos]
-      out = child.deleteMax(min, onChange)
+      out = child.deleteMax(min)
   
       if (child.values.length < min) {
         this.growChild(pos, min)
@@ -394,7 +392,7 @@ export class BTree {
       return
     }
 
-    this.root.delete(value, Math.ceil(this.order / 2) - 1, this.onChange)
+    this.root.delete(value, Math.ceil(this.order / 2) - 1)
 
     // update new root
     if (this.root.values.length === 0) {
@@ -471,7 +469,7 @@ export class BTreeNode {
   }
 
   // delete
-  delete(value: number, min: number, onChange = () => {}): number | null {
+  delete(value: number, min: number): number | null {
     const [pos, found] = this.findPosition(value)
     let out: number | null = null
 
@@ -480,7 +478,6 @@ export class BTreeNode {
       if (found) {
         // remove
         out = this.values.splice(pos, 1)[0]
-        onChange()
       }
     } else {
       // internal node
@@ -488,21 +485,18 @@ export class BTreeNode {
 
       if (found) {
         // delete the max value of the child
-        const out = child.deleteMax(min, onChange)
+        const out = child.deleteMax(min)
         if (out) {
           // replace the found position with the deleted value
           this.values[pos] = out
-          onChange()
         }
       } else {
-        out = child.delete(value, min, onChange)
+        out = child.delete(value, min)
       }
 
       // after delete, grow child if needed
       if (child.values.length < min) {
         this.growChild(pos, min)
-        // incase empty root, we skip this change
-        if (this.values.length) onChange()
       }
     }
 
@@ -510,19 +504,17 @@ export class BTreeNode {
   }
 
   // delete last value of the right-most child
-  private deleteMax(min: number, onChange = () => {}): number | null {
+  private deleteMax(min: number): number | null {
     let out: number | null = null
     if (this.isleaf()) {
       out = this.values.pop() || null
-      onChange()
     } else {
       const pos = this.values.length
       const child = this.children[pos]
-      out = child.deleteMax(min, onChange)
+      out = child.deleteMax(min)
   
       if (child.values.length < min) {
         this.growChild(pos, min)
-        onChange()
       }
     }
 
@@ -612,6 +604,12 @@ export class BTree {
 ```
 
 ## Minh họa
+
+ORDER = 5
+
+Số phần tử tối thiểu: 2
+
+Số phần tử tối đa: 4
 
 ```[btree](shape=rect,size=32,height=250)
 31 30 23 50 45 48 70 67 75
