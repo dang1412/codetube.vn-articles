@@ -45,7 +45,7 @@ Tạo token trên mạng lưới Blockchain có thể nói là 1 trong những �
 
 Lập 1 đồng token trên Blockchain cũng giống hệt như vậy, chỉ khác là dữ liệu được ghi trực tiếp vào State của HDTM và sử dụng hệ thống account Blockchain có sẵn. Hay nói cách khác HDTM là backend phi tập trung chứa cả logic API và Database được cài đặt ở cùng 1 chỗ, và 1 khi đã deploy database cũng như logic này không thể tùy ý thay đổi như ở ứng dụng truyền thống. Chuẩn cài đặt ERC20 cho đồng token được áp dụng rộng rãi để thuận tiện cho việc trao đổi, hiển thị...các đồng token trong các ứng dụng khác.
 
-## Cài đặt thuật toán
+## Thuật toán
 
 Chúng ta cùng đi vào cài đặt phần logic chính của ERC20 dùng [Solidity](https://docs.soliditylang.org/).
 
@@ -53,7 +53,7 @@ Chúng ta cùng đi vào cài đặt phần logic chính của ERC20 dùng [Soli
 
 Ngoài việc thực hiện chuyển tiền đơn thuần giữa 2 người, ERC20 cho phép 1 tài khoản bên thứ 3 thực hiện chuyển tiền giữa 2 tài khoản khác nhau, với điều kiện là chủ sở hữu tài khoản gửi cho phép. Token contract cung cấp những chức năng thể hiện ở giao diện sau:
 
-```js
+```sol
 interface IERC20 {
   // tổng cung
   function totalSupply() external view returns (uint256);
@@ -86,7 +86,7 @@ interface IERC20 {
 
 Ngoài ra 1 token contract cung cấp thêm các thông tin sau
 
-```js
+```sol
 interface IERC20Metadata {
   // tên token, vd Etherium
   function name() external view returns (string memory);
@@ -105,7 +105,7 @@ interface IERC20Metadata {
 
 Data của token contract cần ghi thông tin sau
 
-```js
+```sol
 contract ERC20 is IERC20, IERC20Metadata {
   // Số dư
   mapping(address => uint256) private _balances;
@@ -117,7 +117,7 @@ contract ERC20 is IERC20, IERC20Metadata {
 
 Trả về số dư tài khoản
 
-```js
+```sol
 function balanceOf(address account) public view returns (uint256) {
   return _balances[account];
 }
@@ -125,7 +125,7 @@ function balanceOf(address account) public view returns (uint256) {
 
 Chuyển token từ người gọi contract
 
-```js
+```sol
 // Người gọi thực hiện chuyển token
 function transfer(address recipient, uint256 amount) public returns (bool) {
     _transfer(_msgSender(), recipient, amount);
@@ -154,7 +154,7 @@ function _transfer(
 
 Để bên thứ 3 (người gọi contract) thực hiện chuyển token từ người A sang người B, chúng ta cần thông tin chủ sở hữu token cho phép người thứ 3 sử dụng bao nhiêu đồng token.
 
-```js
+```sol
 // Chứa thông tin cho phép sử dụng
 mapping(address => mapping(address => uint256)) private _allowances;
 
@@ -174,7 +174,7 @@ function _approve(
 
 Người gọi contract thực hiện chuyển token từ người gửi đến người nhận
 
-```js
+```sol
 function transferFrom(
   address sender,
   address recipient,
@@ -199,7 +199,7 @@ function transferFrom(
 
 Ngoài ra chúng ta có hàm `internal` `_mint` để tạo token mới và thêm vào 1 địa chỉ
 
-```js
+```sol
 function _mint(address account, uint256 amount) internal virtual {
   require(account != address(0), "ERC20: mint to the zero address");
 
@@ -211,11 +211,11 @@ function _mint(address account, uint256 amount) internal virtual {
 }
 ```
 
-## Triển khai với Openzeppellin, Hardhat và Typescript
+## Setup và deploy với Hardhat
 
-Trên thực tế để tạo 1 đồng token của riêng mình chúng ta không cần code lại ERC20 mà có thể sử dụng thư viện mở có sẵn [Openzeppellin-ERC20](https://docs.openzeppelin.com/contracts/4.x/erc20)
+Trên thực tế để tạo 1 đồng token của riêng mình chúng ta không cần code lại ERC20 mà có thể sử dụng thư viện mở có sẵn [Openzeppellin-ERC20](https://docs.openzeppelin.com/contracts/4.x/erc20).
 
-```js
+```sol
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -230,7 +230,7 @@ contract GLDToken is ERC20 {
 }
 ```
 
-Setup, test và deploy dùng hardhat và typescript
+Setup, test và deploy dùng Hardhat và Typescript.
 
 ### Setup
 
@@ -248,7 +248,7 @@ npm i --save-dev @openzeppelin/contracts
 
 Sau khi khởi tạo project và cài đặt các gói cần thiết, tạo file contract cho token `contracts/GLDToken.sol`
 
-```js
+```sol
 // contracts/GLDToken.sol
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -262,7 +262,7 @@ contract GLDToken is ERC20 {
 }
 ```
 
-Compile contract, hardhat sẽ tự động sinh ra kiểu cho contract (dùng `typechain` package) để chúng ta có thể test với typescript rất tiện lợi
+Compile contract, hardhat sẽ tự động sinh ra kiểu cho contract (dùng `typechain` package) để chúng ta có thể test với typescript rất tiện lợi.
 
 ```sh
 npx hardhat compile
@@ -270,9 +270,9 @@ npx hardhat compile
 
 ### Test
 
-Để test tạo file `test/GLDToken.spec.ts`, sử cấu trúc của `Mocha`
+Để test tạo file `test/GLDToken.spec.ts`, sử dụng cấu trúc `Mocha`
 
-```js
+```ts
 import { expect } from "chai"
 import { ethers } from "hardhat"
 import { GLDToken__factory, GLDToken } from "../typechain"
@@ -286,7 +286,7 @@ describe("MyToken", async () => {
   let GLDToken: GLDToken__factory
   let gldToken: GLDToken
 
-  // Trước mỗi testcase deploy 1 contract mới để test để đảm bảo các testcase độc lập lẫn nhau
+  // Trước mỗi testcase deploy 1 contract mới để test để đảm bảo các testcase chạy độc lập với nhau
   beforeEach(async () => {
     GLDToken = await ethers.getContractFactory("GLDToken")
     gldToken = await GLDToken.deploy(InitSupply)
@@ -297,6 +297,7 @@ describe("MyToken", async () => {
     expect(await gldToken.balanceOf(owner.address)).to.equal(1000)
   })
 
+  // test transfer
   describe("transfer", () => {
     it("Should transfer to acc1", async () => {
       await gldToken.transfer(acc1.address, 100)
@@ -315,6 +316,7 @@ describe("MyToken", async () => {
     })
   })
 
+  // test approve và transferFrom
   describe("When approved allownance", () => {
     beforeEach(async () => {
       gldToken.approve(acc1.address, 150)
@@ -350,7 +352,7 @@ npx hardhat test
 
 ### Deploy
 
-Khi chạy test mà không chỉ định network, hardhat khởi chạy 1 chuỗi mặc định gọi là `hardhat network` và tự động dừng khi test run kết thúc. Để deploy lên network có sẵn như local chain hay testnet, trước hết ta phải khai báo network này trong config file `hardhat.config.ts`.
+Khi chạy test mà không chỉ định network, Hardhat khởi chạy 1 chuỗi mặc định gọi là `hardhat network` và tự động dừng khi test run kết thúc. Để deploy lên network có sẵn như local chain hay testnet, trước hết ta phải khai báo network này trong config file `hardhat.config.ts`.
 
 Khai báo endpoint url (sử dụng node của `alchemy`) và private key trong file `.env`
 
@@ -359,7 +361,7 @@ ROPSTEN_URL=https://eth-ropsten.alchemyapi.io/v2/<YOUR ALCHEMY KEY>
 PRIVATE_KEY=0xabc123abc123abc123abc123abc123abc123abc123abc123abc123abc123abc1
 ```
 
-Trong config file, khai báo ropsten testnet
+Trong config file, khai báo ropsten testnet:
 
 ```ts
 const config: HardhatUserConfig = {
@@ -377,7 +379,7 @@ const config: HardhatUserConfig = {
 Tạo script trong `scripts/deploy.ts`
 
 ```ts
-import { ethers } from "hardhat";
+import { ethers } from "hardhat"
 
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
@@ -388,20 +390,20 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const GLDToken = await ethers.getContractFactory("GLDToken");
-  const gLDToken = await GLDToken.deploy("Hello, Hardhat!");
+  const GLDToken = await ethers.getContractFactory("GLDToken")
+  const gLDToken = await GLDToken.deploy("Hello, Hardhat!")
 
-  await gLDToken.deployed();
+  await gLDToken.deployed()
 
-  console.log("GLDToken deployed to:", gLDToken.address);
+  console.log("GLDToken deployed to:", gLDToken.address)
 }
 
 // We recommend this pattern to be able to use async/await everywhere
 // and properly handle errors.
 main().catch((error) => {
-  console.error(error);
-  process.exitCode = 1;
-});
+  console.error(error)
+  process.exitCode = 1
+})
 ```
 
 Deploy lên ropsten testnet
@@ -410,4 +412,4 @@ Deploy lên ropsten testnet
 npx hardhat run --network ropsten scripts/deploy.ts
 ```
 
-Hiểu được cách vận hành của đồng token ERC20 là tiền đề để chúng ta đi sâu hơn vào các ứng dụng như swap, NFT marketplace...trong các bài viết tiếp theo.
+Hiểu được cài đặt và vận hành của đồng token ERC20 là tiền đề để chúng ta tiếp tục tìm hiểu các ứng dụng phức tạp hơn như Swap, NFT marketplace...trong các bài tiếp theo.
